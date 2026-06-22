@@ -1,2 +1,0 @@
-# Agnes
-Agnes AI
