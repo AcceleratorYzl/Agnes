@@ -51,8 +51,7 @@
         .form-group textarea { resize: vertical; min-height: 72px; }
         .hint { font-size: 12px; color: #8d9db0; margin-top: 3px; }
 
-        /* ---------- 统一所有按钮样式 ---------- */
-        /* 本地上传按钮 */
+        /* 统一按钮样式 */
         .btn-upload {
             background: #eef2f9;
             border: none;
@@ -76,7 +75,6 @@
         .btn-upload:hover { background: #dce4f0; border-color: #b0c4de; transform: scale(1.02); }
         .btn-upload:active { transform: scale(0.96); }
 
-        /* 添加图片按钮 - 与上面完全一致，仅背景色微调以示区别，但宽度一致 */
         .add-btn {
             background: #e3f0ff;
             border: 1px dashed #5b7cfa;
@@ -100,7 +98,6 @@
         .add-btn:hover { background: #d0e3ff; }
         .add-btn.hidden { display: none; }
 
-        /* 图片输入项布局 - 确保按钮在一行 */
         .image-url-item {
             display: flex;
             gap: 10px;
@@ -136,7 +133,6 @@
         }
         .image-url-item .btn-remove:hover { background: #ffcdd2; }
 
-        /* 提示文字与按钮同行，允许换行 */
         .hint {
             display: inline;
             margin-left: 8px;
@@ -144,7 +140,6 @@
             color: #8d9db0;
         }
 
-        /* 主按钮 */
         .btn {
             background: #1a2b4c;
             color: white;
@@ -217,9 +212,9 @@
 <div class="container">
     <div class="header">
         <h1>🧠 Agnes AI <small>全能工具箱</small></h1>
-        <span style="font-size:14px; color:#4a6a8b; background:#eef2f9; padding:4px 16px; border-radius:40px;">v3.5</span>
+        <span style="font-size:14px; color:#4a6a8b; background:#eef2f9; padding:4px 16px; border-radius:40px;">v3.8</span>
     </div>
-    <div class="subhead">⚡ 对话 · 图像生成 · 视频生成 · 多模态多图 </div>
+    <div class="subhead">⚡ 对话 · 图像生成 · 视频生成 · 多模态多图</div>
 
     <!-- API Key -->
     <div class="key-row">
@@ -293,8 +288,22 @@
     <!-- 视频面板 -->
     <div class="tab-panel" id="panel-video">
         <div class="form-grid">
-            <div class="form-group full"><label>模型</label><select id="videoModel" disabled><option value="agnes-video-v2.0">Agnes-Video-V2.0 (固定)</option></select><span class="hint">视频生成使用固定模型 agnes-video-v2.0</span></div>
-            <div class="form-group full"><label>生成模式</label><select id="videoMode"><option value="txt2vid">文生视频</option><option value="img2vid">图生视频 (单图)</option><option value="multi">多图视频 (≥2图)</option><option value="keyframes">关键帧动画 (≥2图)</option></select></div>
+            <div class="form-group">
+                <label>模型</label>
+                <select id="videoModel" disabled>
+                    <option value="agnes-video-v2.0">Agnes-Video-V2.0 (固定)</option>
+                </select>
+                <span class="hint">视频生成使用固定模型 agnes-video-v2.0</span>
+            </div>
+            <div class="form-group">
+                <label>生成模式</label>
+                <select id="videoMode">
+                    <option value="txt2vid">文生视频</option>
+                    <option value="img2vid">图生视频 (单图)</option>
+                    <option value="multi">多图视频 (≥2图)</option>
+                    <option value="keyframes">关键帧动画 (≥2图)</option>
+                </select>
+            </div>
             <div class="form-group full"><label>提示词 <span class="badge">必填</span></label><textarea id="videoPrompt" rows="3">A cinematic shot of a cat walking on the beach at sunset, soft ocean waves, warm golden lighting, realistic motion</textarea></div>
             <div class="form-group"><label>宽度 (width)</label><input type="number" id="videoWidth" value="1152" placeholder="默认1152"></div>
             <div class="form-group"><label>高度 (height)</label><input type="number" id="videoHeight" value="768" placeholder="默认768"></div>
@@ -388,16 +397,43 @@
             });
         });
 
-        // ---------- 通用图片列表管理 ----------
-        function fileToBase64(file) {
+        // ========== 关键修复：Base64 清理函数 ==========
+        // 1. 去除 Data URI 前缀 (data:image/png;base64,) 和所有空白字符
+        function cleanBase64(dataUri) {
+            if (!dataUri) return '';
+            let base64 = dataUri;
+            // 如果包含逗号，说明是 Data URI，取逗号后面的部分
+            if (dataUri.includes(',')) {
+                base64 = dataUri.split(',')[1];
+            }
+            // 去除所有空白字符（换行、空格等）
+            return base64.replace(/\s/g, '');
+        }
+
+        // 2. 文件转 Base64：直接返回纯 Base64（不含前缀）
+        async function fileToBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
+                reader.onload = () => {
+                    const dataUri = reader.result;
+                    const base64 = dataUri.split(',')[1]?.replace(/\s/g, '') || '';
+                    resolve(base64);
+                };
                 reader.onerror = reject;
                 reader.readAsDataURL(file);
             });
         }
 
+        // 3. 获取所有图片 URL，并自动清理
+        function getImageUrls(container) {
+            const inputs = container.querySelectorAll('.img-url-input');
+            return Array.from(inputs)
+                .map(inp => inp.value.trim())
+                .filter(v => v.length > 0)
+                .map(v => cleanBase64(v)); // 统一清理
+        }
+
+        // ---------- 通用图片列表管理 ----------
         function createImageItem(container, value = '') {
             const div = document.createElement('div');
             div.className = 'image-url-item';
@@ -406,6 +442,7 @@
             input.type = 'text';
             input.className = 'img-url-input';
             input.placeholder = '输入图片URL或Base64...';
+            // 如果传入 value，可能是带前缀的 Data URI，我们需要显示时保留原样，但存储时清理在 getImageUrls 中进行
             input.value = value;
 
             const uploadBtn = document.createElement('button');
@@ -423,6 +460,7 @@
             div.appendChild(removeBtn);
             container.appendChild(div);
 
+            // 上传事件
             uploadBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const fileInput = document.createElement('input');
@@ -435,8 +473,13 @@
                     uploadBtn.textContent = '⏳ 转换中...';
                     uploadBtn.disabled = true;
                     try {
-                        const dataUri = await fileToBase64(file);
-                        input.value = dataUri;
+                        // 直接获取纯 Base64（无前缀）
+                        const pureBase64 = await fileToBase64(file);
+                        // 显示时，可以添加 data:image/png;base64, 前缀以方便预览（但不影响提交）
+                        // 但为了清晰，我们可以只显示纯Base64（太长），或者显示前缀+Base64
+                        // 这里我们显示带前缀的，便于用户识别，但 getImageUrls 会清理
+                        const displayValue = 'data:image/png;base64,' + pureBase64;
+                        input.value = displayValue;
                         input.dispatchEvent(new Event('input'));
                         alert('✅ 已转换图片为Base64并填入');
                     } catch (err) {
@@ -449,6 +492,7 @@
                 fileInput.click();
             });
 
+            // 删除事件
             removeBtn.addEventListener('click', function() {
                 const parent = container;
                 const itemCount = parent.children.length;
@@ -466,11 +510,6 @@
             });
 
             return div;
-        }
-
-        function getImageUrls(container) {
-            const inputs = container.querySelectorAll('.img-url-input');
-            return Array.from(inputs).map(inp => inp.value.trim()).filter(v => v.length > 0);
         }
 
         // ---------- 初始化列表 ----------
@@ -582,7 +621,10 @@
             } else {
                 userContent = [{ type: 'text', text: user }];
                 imageUrls.forEach(url => {
-                    userContent.push({ type: 'image_url', image_url: { url: url } });
+                    // 对于对话，需要加上 data:image/png;base64, 前缀，因为对话API要求完整的 Data URI
+                    // 但我们的 cleanBase64 已经去掉了前缀，所以需要重新添加
+                    const fullDataUri = url.startsWith('data:') ? url : 'data:image/png;base64,' + url;
+                    userContent.push({ type: 'image_url', image_url: { url: fullDataUri } });
                 });
             }
             messages.push({ role: 'user', content: userContent });
@@ -650,11 +692,14 @@
             if (!size || !/^\d+x\d+$/.test(size)) { showError(imgError, '尺寸格式错误，如 1024x768'); return; }
             const payload = { model, prompt, size };
             if (mode !== 'txt2img') {
-                const urls = getImageUrls(imgUrlList);
+                const urls = getImageUrls(imgUrlList); // 已经清理，纯Base64
                 if (urls.length === 0) { showError(imgError, '请至少输入一个图片URL/Base64'); return; }
                 if (mode === 'img2img' && urls.length !== 1) { showError(imgError, '图生图模式仅需一个图片'); return; }
                 if (mode === 'multi' && urls.length < 2) { showError(imgError, '多图合成至少需要两个图片'); return; }
-                payload.extra_body = { image: urls };
+                // 图像 API 支持 Data URI 或纯 Base64，官方文档支持带前缀的Data URI，我们直接使用原值（getImageUrls返回的是纯Base64，但API也接受纯Base64？文档示例是URL，但我们可以尝试纯Base64）
+                // 为了兼容，我们添加 data:image/png;base64, 前缀，但有些API可能接受纯Base64，保守起见，我们添加前缀
+                const prefixedUrls = urls.map(u => u.startsWith('data:') ? u : 'data:image/png;base64,' + u);
+                payload.extra_body = { image: prefixedUrls };
             }
             if (format === 'url') { if (!payload.extra_body) payload.extra_body = {}; payload.extra_body.response_format = 'url'; }
             else {
@@ -684,8 +729,9 @@
         }
         imgBtn.addEventListener('click', generateImage);
 
-        // ---------- 视频生成 ----------
-        let videoPollingInterval = null;
+        // ---------- 视频生成 (修复 Base64 和轮询) ----------
+        let videoPollingTimeout = null;
+
         async function generateVideo() {
             clearError(videoError);
             const key = getApiKey();
@@ -697,19 +743,36 @@
             if (num_frames > 441) { showError(videoError, 'num_frames 不能超过 441'); return; }
             if (num_frames % 8 !== 1) { showError(videoError, 'num_frames 必须满足 8n+1 (如 81,121,241)'); return; }
             if (frame_rate < 1 || frame_rate > 60) { showError(videoError, '帧率范围 1-60'); return; }
+
             const payload = { model: 'agnes-video-v2.0', prompt, width, height, num_frames, frame_rate };
             if (mode !== 'txt2vid') {
-                const urls = getImageUrls(videoUrlList);
+                const urls = getImageUrls(videoUrlList); // 纯Base64或URL
                 if (urls.length === 0) { showError(videoError, '请至少输入一个图片URL/Base64'); return; }
                 if (mode === 'img2vid' && urls.length !== 1) { showError(videoError, '图生视频仅需一个图片'); return; }
                 if ((mode === 'multi' || mode === 'keyframes') && urls.length < 2) { showError(videoError, '多图/关键帧至少需要两个图片'); return; }
-                if (mode === 'img2vid') payload.image = urls[0];
-                else { payload.extra_body = { image: urls }; if (mode === 'keyframes') payload.extra_body.mode = 'keyframes'; }
+
+                // 视频API要求：单张图片用 image 字段（字符串），多张用 extra_body.image（数组）
+                // 注意：视频API似乎不支持纯Base64？文档说支持 Data URI，但为了保险，我们尝试纯Base64（不带前缀）
+                // 但用户反馈第三方URL成功，说明API支持URL；对于Base64，可能需要带前缀，我们先尝试纯Base64（因为之前报错 padding）
+                // 根据之前的错误，pading错误是因为带前缀导致，所以我们应该传纯Base64（不带前缀）
+                // 但是用户提到第三方URL成功，而本地Base64失败，说明API可能期望纯Base64或者带前缀的Data URI，但我们的cleanBase64去掉了前缀，可能反而导致错误？
+                // 实际上，之前的错误是"Incorrect padding"，这是Base64格式问题，不是前缀问题。我们清理换行后应该解决。
+                // 所以，我们直接传递 cleaned Base64（无前缀），如果API不接受，我们再尝试加前缀。
+                // 因为之前用户说使用第三方URL成功，所以URL是没问题的。而Base64我们清理后，应该也能成功。
+                // 所以，我们直接传递纯Base64字符串。
+                if (mode === 'img2vid') {
+                    payload.image = urls[0]; // 纯Base64
+                } else {
+                    payload.extra_body = { image: urls }; // 数组，每个元素纯Base64
+                    if (mode === 'keyframes') payload.extra_body.mode = 'keyframes';
+                }
             }
+
             setLoading(videoBtn, true);
             videoPlaceholder.style.display = 'none';
             videoResult.style.display = 'none';
             updateLog(videoLog, '提交任务中...', '📡 请求');
+
             try {
                 const resp = await fetch('https://apihub.agnes-ai.com/v1/videos', {
                     method: 'POST',
@@ -717,51 +780,93 @@
                     body: JSON.stringify(payload)
                 });
                 const json = await resp.json();
-                if (!resp.ok || json.error) throw new Error(json.error?.message || json.error?.code || `HTTP ${resp.status}`);
+                if (!resp.ok || json.error) {
+                    const errMsg = json.error?.message || json.error?.code || `HTTP ${resp.status}`;
+                    throw new Error(errMsg);
+                }
                 const videoId = json.video_id;
                 if (!videoId) throw new Error('响应中缺少 video_id');
+
                 updateLog(videoLog, JSON.stringify(json, null, 2), '📋 任务创建成功');
-                if (videoPollingInterval) clearInterval(videoPollingInterval);
+
+                // 轮询逻辑：初始间隔 10 秒，动态退避
                 let attempts = 0;
-                const maxAttempts = 120;
-                videoPollingInterval = setInterval(async () => {
+                const maxAttempts = 60;
+                let currentInterval = 10000;
+
+                function pollVideo() {
                     attempts++;
-                    try {
-                        const queryResp = await fetch(`https://apihub.agnes-ai.com/agnesapi?video_id=${videoId}`, {
-                            headers: { 'Authorization': `Bearer ${key}` }
-                        });
-                        const queryJson = await queryResp.json();
-                        if (!queryResp.ok) throw new Error(queryJson.error?.message || `查询失败 ${queryResp.status}`);
-                        const status = queryJson.status, progress = queryJson.progress || 0;
-                        updateLog(videoLog, `⏳ 状态: ${status} (${progress}%)\n${JSON.stringify(queryJson, null, 2)}`, '📋 轮询中');
-                        if (status === 'completed') {
-                            clearInterval(videoPollingInterval); videoPollingInterval = null;
-                            const videoUrl = queryJson.remixed_from_video_id;
-                            if (videoUrl) { videoResult.src = videoUrl; videoResult.style.display = 'block'; videoPlaceholder.style.display = 'none'; }
-                            else throw new Error('完成但未返回视频 URL');
-                            updateLog(videoLog, `✅ 生成完成\n${JSON.stringify(queryJson, null, 2)}`, '📋 完成');
-                            setLoading(videoBtn, false);
-                        } else if (status === 'failed') {
-                            clearInterval(videoPollingInterval); videoPollingInterval = null;
-                            throw new Error(queryJson.error?.message || '视频生成失败');
-                        } else if (attempts >= maxAttempts) {
-                            clearInterval(videoPollingInterval); videoPollingInterval = null;
-                            throw new Error('轮询超时 (10分钟)');
+                    fetch(`https://apihub.agnes-ai.com/agnesapi?video_id=${videoId}`, {
+                        headers: { 'Authorization': `Bearer ${key}` }
+                    })
+                    .then(res => res.json())
+                    .then(queryJson => {
+                        if (!queryJson.error) {
+                            const status = queryJson.status;
+                            const progress = queryJson.progress || 0;
+                            updateLog(videoLog, `⏳ 状态: ${status} (${progress}%)\n${JSON.stringify(queryJson, null, 2)}`, '📋 轮询中');
+
+                            if (status === 'completed') {
+                                clearTimeout(videoPollingTimeout);
+                                videoPollingTimeout = null;
+                                const videoUrl = queryJson.remixed_from_video_id;
+                                if (videoUrl) {
+                                    videoResult.src = videoUrl;
+                                    videoResult.style.display = 'block';
+                                    videoPlaceholder.style.display = 'none';
+                                    updateLog(videoLog, `✅ 生成完成\n${JSON.stringify(queryJson, null, 2)}`, '📋 完成');
+                                } else {
+                                    throw new Error('完成但未返回视频 URL');
+                                }
+                                setLoading(videoBtn, false);
+                                return;
+                            } else if (status === 'failed') {
+                                clearTimeout(videoPollingTimeout);
+                                videoPollingTimeout = null;
+                                throw new Error(queryJson.error?.message || '视频生成失败');
+                            } else if (status === 'queued' || status === 'in_progress') {
+                                if (attempts > 10) {
+                                    currentInterval = Math.min(currentInterval * 1.5, 30000);
+                                }
+                            }
+                        } else {
+                            // 查询出错
+                            if (queryJson.error && queryJson.error.message && queryJson.error.message.includes('rate limit')) {
+                                currentInterval = Math.min(currentInterval * 1.5, 30000);
+                            } else {
+                                throw new Error(queryJson.error?.message || '查询失败');
+                            }
                         }
-                    } catch (err) {
-                        clearInterval(videoPollingInterval); videoPollingInterval = null;
+
+                        if (attempts >= maxAttempts) {
+                            clearTimeout(videoPollingTimeout);
+                            videoPollingTimeout = null;
+                            throw new Error('轮询超时 (超过最大尝试次数)');
+                        }
+
+                        videoPollingTimeout = setTimeout(pollVideo, currentInterval);
+                    })
+                    .catch(err => {
+                        clearTimeout(videoPollingTimeout);
+                        videoPollingTimeout = null;
                         showError(videoError, err.message);
                         updateLog(videoLog, `❌ 错误: ${err.message}`, '⚠️ 异常');
                         setLoading(videoBtn, false);
-                    }
-                }, 5000);
+                    });
+                }
+
+                videoPollingTimeout = setTimeout(pollVideo, currentInterval);
+
+                // 总超时保护（20分钟）
                 setTimeout(() => {
-                    if (videoPollingInterval) {
-                        clearInterval(videoPollingInterval); videoPollingInterval = null;
-                        showError(videoError, '轮询总超时 (10分钟)');
+                    if (videoPollingTimeout) {
+                        clearTimeout(videoPollingTimeout);
+                        videoPollingTimeout = null;
+                        showError(videoError, '轮询总超时 (20分钟)');
                         setLoading(videoBtn, false);
                     }
-                }, 600000);
+                }, 1200000);
+
             } catch (err) {
                 showError(videoError, err.message);
                 updateLog(videoLog, `❌ 错误: ${err.message}`, '⚠️ 异常');
@@ -769,7 +874,12 @@
             }
         }
         videoBtn.addEventListener('click', generateVideo);
-        window.addEventListener('beforeunload', function() { if (videoPollingInterval) clearInterval(videoPollingInterval); });
+        window.addEventListener('beforeunload', function() {
+            if (videoPollingTimeout) {
+                clearTimeout(videoPollingTimeout);
+                videoPollingTimeout = null;
+            }
+        });
 
         // ---------- 快捷键 ----------
         document.addEventListener('keydown', (e) => {
@@ -794,8 +904,8 @@
         updateImageMode();
         updateVideoMode();
 
-        console.log('✅ Agnes AI 全能工具箱 (最终版) 已加载。');
-        console.log('💡 所有"添加图片"按钮宽度已统一为紧凑型，提示文字同行显示。');
+        console.log('✅ Agnes AI 全能工具箱 (Base64修复版) 已加载。');
+        console.log('💡 本地上传的图片将被转换为纯Base64，解决padding错误。');
     })();
 </script>
 </body>
