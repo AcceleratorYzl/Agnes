@@ -265,7 +265,7 @@
         <div class="form-grid">
             <div class="form-group"><label>模型 <span class="badge">必选</span></label><select id="imgModel"><option value="agnes-image-2.0-flash">Agnes-Image-2.0-Flash (文/图/多图合成)</option><option value="agnes-image-2.1-flash" selected>Agnes-Image-2.1-Flash (高信息密度)</option></select></div>
             <div class="form-group"><label>生成模式</label><select id="imgMode"><option value="txt2img">文生图</option><option value="img2img">图生图 (单图)</option><option value="multi">多图合成 (≥2图)</option></select></div>
-            <div class="form-group full"><label>提示词 <span class="badge">必填</span></label><textarea id="imgPrompt" rows="3">A futuristic city marketplace filled with flying vehicles, holographic signs, dense crowds, neon lighting, cinematic realism</textarea></div>
+            <div class="form-group full"><label>提示词( 推荐结构: [主体] + [场景 / 环境] + [风格] + [光照] + [构图] + [质量要求] ) <span class="badge">必填</span></label><textarea id="imgPrompt" rows="3">A large fantasy harbor city built on cliffs, hundreds of small boats, layered stone bridges, glowing windows, distant mountains, cloudy sunset sky, cinematic fantasy realism, wide-angle composition, rich architectural details, high visual density</textarea></div>
             <div class="form-group"><label>尺寸 (宽x高)</label><input type="text" id="imgSize" value="1024x768" placeholder="例如 1024x768"></div>
             <div class="form-group"><label>返回格式</label><select id="imgFormat"><option value="url">图片 URL</option><option value="b64">Base64</option></select></div>
             <div class="form-group full" id="imgUrlsGroup">
@@ -304,7 +304,7 @@
                     <option value="keyframes">关键帧动画 (≥2图)</option>
                 </select>
             </div>
-            <div class="form-group full"><label>提示词 <span class="badge">必填</span></label><textarea id="videoPrompt" rows="3">A cinematic shot of a cat walking on the beach at sunset, soft ocean waves, warm golden lighting, realistic motion</textarea></div>
+            <div class="form-group full"><label>提示词( 推荐结构: [主体] + [动作] + [场景] + [镜头运动] + [光照] + [风格] ) <span class="badge">必填</span></label><textarea id="videoPrompt" rows="3">A cinematic shot of a cat walking on the beach at sunset, soft ocean waves, warm golden lighting, realistic motion</textarea></div>
             <div class="form-group"><label>宽度 (width)</label><input type="number" id="videoWidth" value="1152" placeholder="默认1152"></div>
             <div class="form-group"><label>高度 (height)</label><input type="number" id="videoHeight" value="768" placeholder="默认768"></div>
             <div class="form-group"><label>帧数 (num_frames) <span class="badge">≤441, 8n+1</span></label><input type="number" id="videoFrames" value="121" placeholder="121"></div>
