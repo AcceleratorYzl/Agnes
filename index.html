@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agnes AI 全能工具箱</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(145deg, #f0f4fe 0%, #e9eff9 100%);
@@ -26,32 +30,189 @@
             padding: 34px 36px 44px;
             border: 1px solid rgba(255, 255, 255, 0.6);
         }
-        .header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
-        .header h1 { font-size: 30px; font-weight: 700; color: #0b1a33; display: flex; align-items: center; gap: 14px; letter-spacing: -0.4px; }
-        .header h1 small { font-size: 16px; font-weight: 500; color: #4a6a8b; background: rgba(91, 124, 250, 0.12); padding: 4px 18px; border-radius: 40px; }
-        .subhead { color: #3a5070; font-size: 15px; padding-left: 20px; border-left: 4px solid #5b7cfa; background: rgba(91, 124, 250, 0.06); border-radius: 0 14px 14px 0; padding: 10px 20px; margin-bottom: 28px; line-height: 1.5; }
-        .key-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: rgba(255,255,255,0.7); backdrop-filter: blur(4px); padding: 12px 20px; border-radius: 60px; border: 1px solid rgba(200,212,230,0.5); margin-bottom: 28px; }
-        .key-row label { font-weight: 600; color: #1f2a41; font-size: 14px; display: flex; align-items: center; gap: 6px; }
-        .key-row input { flex: 1; min-width: 220px; padding: 10px 18px; border: 1.5px solid #dce2ec; border-radius: 40px; font-size: 14px; font-family: 'JetBrains Mono', monospace; background: #ffffff; transition: 0.2s; color: #0b1a33; }
-        .key-row input:focus { border-color: #5b7cfa; outline: none; box-shadow: 0 0 0 4px rgba(91,124,250,0.12); }
-        .tabs { display: flex; gap: 6px; border-bottom: 2px solid rgba(200,212,230,0.5); margin-bottom: 30px; flex-wrap: wrap; }
-        .tab-btn { padding: 12px 32px; font-size: 16px; font-weight: 600; background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; color: #6a7e9e; transition: all 0.2s ease; border-radius: 16px 16px 0 0; display: flex; align-items: center; gap: 8px; }
-        .tab-btn:hover { color: #0b1a33; background: rgba(91,124,250,0.06); }
-        .tab-btn.active { color: #0b1a33; border-bottom-color: #5b7cfa; background: rgba(91,124,250,0.08); }
-        .tab-panel { display: none; animation: fadeUp 0.25s ease; }
-        .tab-panel.active { display: block; }
-        @keyframes fadeUp { 0% { opacity: 0.3; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; }
-        .form-group { display: flex; flex-direction: column; gap: 5px; }
-        .form-group.full { grid-column: 1 / -1; }
-        .form-group label { font-size: 13px; font-weight: 600; color: #1f2a41; display: flex; align-items: center; gap: 6px; }
-        .form-group label .badge { font-weight: 400; font-size: 11px; background: #eef2f9; padding: 0 12px; border-radius: 20px; color: #3c4e6b; }
-        .form-group input, .form-group select, .form-group textarea { padding: 10px 16px; border: 1.5px solid #dce2ec; border-radius: 16px; font-size: 14px; font-family: inherit; background: #ffffff; transition: 0.2s; color: #0f1a2f; width: 100%; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #5b7cfa; outline: none; box-shadow: 0 0 0 4px rgba(91,124,250,0.08); }
-        .form-group textarea { resize: vertical; min-height: 72px; }
-        .hint { font-size: 12px; color: #8d9db0; margin-top: 3px; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .header h1 {
+            font-size: 30px;
+            font-weight: 700;
+            color: #0b1a33;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            letter-spacing: -0.4px;
+        }
+        .header h1 small {
+            font-size: 16px;
+            font-weight: 500;
+            color: #4a6a8b;
+            background: rgba(91, 124, 250, 0.12);
+            padding: 4px 18px;
+            border-radius: 40px;
+        }
+        .subhead {
+            color: #3a5070;
+            font-size: 15px;
+            padding-left: 20px;
+            border-left: 4px solid #5b7cfa;
+            background: rgba(91, 124, 250, 0.06);
+            border-radius: 0 14px 14px 0;
+            padding: 10px 20px;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+        .key-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 12px 20px;
+            border-radius: 60px;
+            border: 1px solid rgba(200, 212, 230, 0.5);
+            margin-bottom: 28px;
+        }
+        .key-row label {
+            font-weight: 600;
+            color: #1f2a41;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .key-row input {
+            flex: 1;
+            min-width: 220px;
+            padding: 10px 18px;
+            border: 1.5px solid #dce2ec;
+            border-radius: 40px;
+            font-size: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            background: #ffffff;
+            transition: 0.2s;
+            color: #0b1a33;
+        }
+        .key-row input:focus {
+            border-color: #5b7cfa;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(91, 124, 250, 0.12);
+        }
+        .tabs {
+            display: flex;
+            gap: 6px;
+            border-bottom: 2px solid rgba(200, 212, 230, 0.5);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 12px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            color: #6a7e9e;
+            transition: all 0.2s ease;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn:hover {
+            color: #0b1a33;
+            background: rgba(91, 124, 250, 0.06);
+        }
+        .tab-btn.active {
+            color: #0b1a33;
+            border-bottom-color: #5b7cfa;
+            background: rgba(91, 124, 250, 0.08);
+        }
+        .tab-panel {
+            display: none;
+            animation: fadeUp 0.25s ease;
+        }
+        .tab-panel.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            0% {
+                opacity: 0.3;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px 24px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f2a41;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .form-group label .badge {
+            font-weight: 400;
+            font-size: 11px;
+            background: #eef2f9;
+            padding: 0 12px;
+            border-radius: 20px;
+            color: #3c4e6b;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px 16px;
+            border: 1.5px solid #dce2ec;
+            border-radius: 16px;
+            font-size: 14px;
+            font-family: inherit;
+            background: #ffffff;
+            transition: 0.2s;
+            color: #0f1a2f;
+            width: 100%;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #5b7cfa;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(91, 124, 250, 0.08);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 72px;
+        }
+        .form-group select {
+            appearance: auto;
+            cursor: pointer;
+        }
+        .hint {
+            font-size: 12px;
+            color: #8d9db0;
+            margin-top: 3px;
+        }
 
-        /* 统一按钮样式 */
         .btn-upload {
             background: #eef2f9;
             border: none;
@@ -72,8 +233,14 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .btn-upload:hover { background: #dce4f0; border-color: #b0c4de; transform: scale(1.02); }
-        .btn-upload:active { transform: scale(0.96); }
+        .btn-upload:hover {
+            background: #dce4f0;
+            border-color: #b0c4de;
+            transform: scale(1.02);
+        }
+        .btn-upload:active {
+            transform: scale(0.96);
+        }
 
         .add-btn {
             background: #e3f0ff;
@@ -95,8 +262,12 @@
             text-overflow: ellipsis;
             margin-top: 4px;
         }
-        .add-btn:hover { background: #d0e3ff; }
-        .add-btn.hidden { display: none; }
+        .add-btn:hover {
+            background: #d0e3ff;
+        }
+        .add-btn.hidden {
+            display: none;
+        }
 
         .image-url-item {
             display: flex;
@@ -118,7 +289,7 @@
         .image-url-item input[type="text"]:focus {
             border-color: #5b7cfa;
             outline: none;
-            box-shadow: 0 0 0 4px rgba(91,124,250,0.08);
+            box-shadow: 0 0 0 4px rgba(91, 124, 250, 0.08);
         }
         .image-url-item .btn-remove {
             background: #ffebee;
@@ -131,7 +302,9 @@
             flex-shrink: 0;
             white-space: nowrap;
         }
-        .image-url-item .btn-remove:hover { background: #ffcdd2; }
+        .image-url-item .btn-remove:hover {
+            background: #ffcdd2;
+        }
 
         .hint {
             display: inline;
@@ -153,14 +326,14 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 4px 16px rgba(26,43,76,0.12);
+            box-shadow: 0 4px 16px rgba(26, 43, 76, 0.12);
             margin-top: 8px;
             white-space: nowrap;
         }
         .btn:hover:not(:disabled) {
             background: #0f1d38;
             transform: translateY(-3px);
-            box-shadow: 0 8px 28px rgba(26,43,76,0.18);
+            box-shadow: 0 8px 28px rgba(26, 43, 76, 0.18);
         }
         .btn:disabled {
             opacity: 0.5;
@@ -172,757 +345,958 @@
             display: none;
             width: 18px;
             height: 18px;
-            border: 3px solid rgba(255,255,255,0.25);
+            border: 3px solid rgba(255, 255, 255, 0.25);
             border-top: 3px solid #fff;
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
         }
-        .btn.loading .spinner { display: inline-block; }
-        .btn.loading .btn-text { display: none; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .btn-secondary { background: #3b5a8a; }
-        .btn-secondary:hover:not(:disabled) { background: #2a4570; }
+        .btn.loading .spinner {
+            display: inline-block;
+        }
+        .btn.loading .btn-text {
+            display: none;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .btn-secondary {
+            background: #3b5a8a;
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background: #2a4570;
+        }
 
-        .flex-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
-        .result-box { margin-top: 30px; border-top: 2px dashed rgba(200,212,230,0.6); padding-top: 26px; }
-        .preview { background: rgba(248,250,254,0.7); backdrop-filter: blur(4px); border-radius: 24px; padding: 24px; text-align: center; min-height: 120px; border: 1px solid rgba(220,226,236,0.5); display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .preview img, .preview video { max-width: 100%; max-height: 420px; border-radius: 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.06); background: #fff; }
-        .preview .placeholder { color: #8d9db0; font-size: 16px; font-weight: 500; }
-        .json-log { background: #0d1a2e; color: #d4e2ff; padding: 18px 22px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; overflow-x: auto; white-space: pre-wrap; word-break: break-all; max-height: 280px; overflow-y: auto; margin-top: 18px; border: 1px solid #1e3150; }
-        .json-log .log-label { color: #8aa1d9; font-weight: 600; font-size: 12px; display: block; margin-bottom: 8px; }
-        .error-msg { background: #fff1f0; border: 1px solid #ffccc7; color: #b71c1c; padding: 12px 20px; border-radius: 16px; margin-top: 14px; }
+        .flex-row {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 6px;
+        }
+        .result-box {
+            margin-top: 30px;
+            border-top: 2px dashed rgba(200, 212, 230, 0.6);
+            padding-top: 26px;
+        }
+        .preview {
+            background: rgba(248, 250, 254, 0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
+            min-height: 120px;
+            border: 1px solid rgba(220, 226, 236, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .preview img,
+        .preview video {
+            max-width: 100%;
+            max-height: 420px;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            background: #fff;
+        }
+        .preview .placeholder {
+            color: #8d9db0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .json-log {
+            background: #0d1a2e;
+            color: #d4e2ff;
+            padding: 18px 22px;
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 280px;
+            overflow-y: auto;
+            margin-top: 18px;
+            border: 1px solid #1e3150;
+        }
+        .json-log .log-label {
+            color: #8aa1d9;
+            font-weight: 600;
+            font-size: 12px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .error-msg {
+            background: #fff1f0;
+            border: 1px solid #ffccc7;
+            color: #b71c1c;
+            padding: 12px 20px;
+            border-radius: 16px;
+            margin-top: 14px;
+        }
+
+        /* 尺寸选择专用样式 */
+        .size-display {
+            background: #f0f4fe;
+            cursor: default;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.5px;
+            color: #0b1a33;
+            border-color: #c8d4e6;
+        }
+        .size-display:focus {
+            border-color: #c8d4e6 !important;
+            box-shadow: none !important;
+        }
+        .size-hint {
+            font-size: 12px;
+            color: #6b7e9c;
+            background: #eef2f9;
+            padding: 2px 12px;
+            border-radius: 20px;
+            margin-left: 8px;
+        }
 
         @media (max-width: 768px) {
-            .container { padding: 20px 16px; border-radius: 28px; }
-            .form-grid { grid-template-columns: 1fr; gap: 14px; }
-            .header h1 { font-size: 24px; flex-wrap: wrap; }
-            .tabs .tab-btn { padding: 10px 20px; font-size: 14px; }
-            .key-row { flex-direction: column; align-items: stretch; border-radius: 28px; padding: 16px; }
-            .btn { width: 100%; justify-content: center; }
-            .flex-row { flex-direction: column; align-items: stretch; }
-            .image-url-item { flex-wrap: wrap; }
+            .container {
+                padding: 20px 16px;
+                border-radius: 28px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            .header h1 {
+                font-size: 24px;
+                flex-wrap: wrap;
+            }
+            .tabs .tab-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            .key-row {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 28px;
+                padding: 16px;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .flex-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .image-url-item {
+                flex-wrap: wrap;
+            }
         }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #eef2f9; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: #b0c4de; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8da3c0; }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eef2f9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b0c4de;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8da3c0;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>🧠 Agnes AI <small>全能工具箱</small></h1>
-        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <span style="font-size:14px; color:#4a6a8b; background:#eef2f9; padding:4px 16px; border-radius:40px;">v4.0</span>
-            <a href="#" id="apiRefLink" target="_blank" style="font-size:14px; color:#5b7cfa; background:rgba(91,124,250,0.12); padding:4px 18px; border-radius:40px; text-decoration:none; font-weight:500; transition:0.2s; white-space:nowrap;" onmouseover="this.style.background='rgba(91,124,250,0.2)'" onmouseout="this.style.background='rgba(91,124,250,0.12)'">📖 API在线参考</a>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Agnes AI <small>全能工具箱</small></h1>
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <span style="font-size:14px; color:#4a6a8b; background:#eef2f9; padding:4px 16px; border-radius:40px;">v4.0</span>
+                <a href="#" id="apiRefLink" target="_blank" style="font-size:14px; color:#5b7cfa; background:rgba(91,124,250,0.12); padding:4px 18px; border-radius:40px; text-decoration:none; font-weight:500; transition:0.2s; white-space:nowrap;" onmouseover="this.style.background='rgba(91,124,250,0.2)'" onmouseout="this.style.background='rgba(91,124,250,0.12)'">📖 API在线参考</a>
+            </div>
         </div>
-    </div>
-    <div class="subhead">⚡ 对话 · 图像生成 · 视频生成 · 多模态多图</div>
+        <div class="subhead">⚡ 对话 · 图像生成 · 视频生成 · 多模态多图</div>
 
-    <!-- API Key -->
-    <div class="key-row">
-        <label>🔑 API Key</label>
-        <input type="password" id="apiKeyInput" value="sk-wxDpwqHtkyz9XLe8CCPfNBc86098poYLvKR0ZIBpOlgt814g" placeholder="输入您的 API Key">
-        <span style="font-size:13px; color:#6b7e9c; background:#eef2f9; padding:4px 12px; border-radius:30px;">已预填</span>
-    </div>
+        <!-- API Key -->
+        <div class="key-row">
+            <label>🔑 API Key</label>
+            <input type="password" id="apiKeyInput" value="sk-wxDpwqHtkyz9XLe8CCPfNBc86098poYLvKR0ZIBpOlgt814g" placeholder="输入您的 API Key">
+            <span style="font-size:13px; color:#6b7e9c; background:#eef2f9; padding:4px 12px; border-radius:30px;">已预填</span>
+        </div>
 
-    <!-- 选项卡 -->
-    <div class="tabs" id="tabHeaders">
-        <button class="tab-btn active" data-tab="chat">💬 对话</button>
-        <button class="tab-btn" data-tab="image">🖼️ 图像</button>
-        <button class="tab-btn" data-tab="video">🎬 视频</button>
-    </div>
+        <!-- 选项卡 -->
+        <div class="tabs" id="tabHeaders">
+            <button class="tab-btn active" data-tab="chat">💬 对话</button>
+            <button class="tab-btn" data-tab="image">🖼️ 图像</button>
+            <button class="tab-btn" data-tab="video">🎬 视频</button>
+        </div>
 
-    <!-- 对话面板 -->
-    <div class="tab-panel active" id="panel-chat">
-        <div class="form-grid">
-            <div class="form-group"><label>模型 <span class="badge">必选</span></label><select id="chatModel"><option value="agnes-1.5-flash">Agnes-1.5-Flash (轻量多模态)</option><option value="agnes-2.0-flash" selected>Agnes-2.0-Flash (强大推理/工具)</option></select></div>
-            <div class="form-group"><label>温度 (temperature)</label><input type="number" id="chatTemp" value="0.7" step="0.1" min="0" max="2"></div>
-            <div class="form-group full"><label>系统提示 <span class="badge">可选</span></label><textarea id="chatSystem" rows="2" placeholder="你是一个乐于助人的AI助手...">你是一个智能助手，请用中文回答。</textarea></div>
-            <div class="form-group full"><label>用户消息 <span class="badge">必填</span></label><textarea id="chatUser" rows="3" placeholder="输入你的问题或指令...">请用中文简单介绍一下Agnes。</textarea></div>
-            <div class="form-group full">
-                <label>图片（多模态） <span class="badge">可选，支持多张</span></label>
-                <div id="chatUrlList"></div>
-                <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
-                    <button class="add-btn" id="chatAddBtn">➕ 添加图片</button>
-                    <span class="hint">支持多张图片，可独立上传或输入URL/Base64，模型将同时理解。</span>
+        <!-- 对话面板 -->
+        <div class="tab-panel active" id="panel-chat">
+            <div class="form-grid">
+                <div class="form-group"><label>模型 <span class="badge">必选</span></label><select id="chatModel"><option value="agnes-1.5-flash">Agnes-1.5-Flash (轻量多模态)</option><option value="agnes-2.0-flash" selected>Agnes-2.0-Flash (强大推理/工具)</option></select></div>
+                <div class="form-group"><label>温度 (temperature)</label><input type="number" id="chatTemp" value="0.7" step="0.1" min="0" max="2"></div>
+                <div class="form-group full"><label>系统提示 <span class="badge">可选</span></label><textarea id="chatSystem" rows="2" placeholder="你是一个乐于助人的AI助手...">你是一个智能助手，请用中文回答。</textarea></div>
+                <div class="form-group full"><label>用户消息 <span class="badge">必填</span></label><textarea id="chatUser" rows="3" placeholder="输入你的问题或指令...">请用中文简单介绍一下Agnes。</textarea></div>
+                <div class="form-group full">
+                    <label>图片（多模态） <span class="badge">可选，支持多张</span></label>
+                    <div id="chatUrlList"></div>
+                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
+                        <button class="add-btn" id="chatAddBtn">➕ 添加图片</button>
+                        <span class="hint">支持多张图片，可独立上传或输入URL/Base64，模型将同时理解。</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="flex-row">
-            <button class="btn" id="chatBtn"><span class="spinner"></span><span class="btn-text">🚀 发送对话</span></button>
-            <button class="btn btn-secondary" id="chatStreamBtn"><span class="spinner"></span><span class="btn-text">📡 流式输出</span></button>
-        </div>
-        <div class="result-box">
-            <div class="preview" id="chatPreview">
-                <div class="placeholder" id="chatPlaceholder">💬 模型回复将显示在此</div>
-                <div id="chatContent" style="width:100%; text-align:left; white-space:pre-wrap; word-break:break-word; display:none;"></div>
+            <div class="flex-row">
+                <button class="btn" id="chatBtn"><span class="spinner"></span><span class="btn-text">🚀 发送对话</span></button>
+                <button class="btn btn-secondary" id="chatStreamBtn"><span class="spinner"></span><span class="btn-text">📡 流式输出</span></button>
             </div>
-            <div class="json-log" id="chatLog"><span class="log-label">📋 响应日志</span>等待请求...</div>
-            <div id="chatError"></div>
+            <div class="result-box">
+                <div class="preview" id="chatPreview">
+                    <div class="placeholder" id="chatPlaceholder">💬 模型回复将显示在此</div>
+                    <div id="chatContent" style="width:100%; text-align:left; white-space:pre-wrap; word-break:break-word; display:none;"></div>
+                </div>
+                <div class="json-log" id="chatLog"><span class="log-label">📋 响应日志</span>等待请求...</div>
+                <div id="chatError"></div>
+            </div>
         </div>
-    </div>
 
-    <!-- 图像面板 -->
-    <div class="tab-panel" id="panel-image">
-        <div class="form-grid">
-            <div class="form-group"><label>模型 <span class="badge">必选</span></label><select id="imgModel"><option value="agnes-image-2.0-flash">Agnes-Image-2.0-Flash (文/图/多图合成)</option><option value="agnes-image-2.1-flash" selected>Agnes-Image-2.1-Flash (高信息密度)</option></select></div>
-            <div class="form-group"><label>生成模式</label><select id="imgMode"><option value="txt2img">文生图</option><option value="img2img">图生图 (单图)</option><option value="multi">多图合成 (≥2图)</option></select></div>
-            <div class="form-group full"><label>提示词( 推荐结构: [主体] + [场景 / 环境] + [风格] + [光照] + [构图] + [质量要求] ) <span class="badge">必填</span></label><textarea id="imgPrompt" rows="3">A large fantasy harbor city built on cliffs, hundreds of small boats, layered stone bridges, glowing windows, distant mountains, cloudy sunset sky, cinematic fantasy realism, wide-angle composition, rich architectural details, high visual density</textarea></div>
-            <div class="form-group"><label>尺寸 (宽x高)</label><input type="text" id="imgSize" value="1024x768" placeholder="例如 1024x768"></div>
-            <div class="form-group"><label>返回格式</label><select id="imgFormat"><option value="url">图片 URL</option><option value="b64">Base64</option></select></div>
-            <div class="form-group full" id="imgUrlsGroup">
-                <label>图片 URL 列表 <span class="badge">图生图/多图必填</span></label>
-                <div id="imgUrlList"></div>
-                <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
-                    <button class="add-btn" id="imgAddBtn">➕ 添加图片</button>
-                    <span class="hint">每个图片可独立上传或输入URL/Base64。图生图只需保留一个，多图合成至少两个。</span>
+        <!-- 图像面板 -->
+        <div class="tab-panel" id="panel-image">
+            <div class="form-grid">
+                <div class="form-group"><label>模型 <span class="badge">必选</span></label><select id="imgModel"><option value="agnes-image-2.0-flash">Agnes-Image-2.0-Flash (文/图/多图合成)</option><option value="agnes-image-2.1-flash" selected>Agnes-Image-2.1-Flash (高信息密度)</option></select></div>
+                <div class="form-group"><label>生成模式</label><select id="imgMode"><option value="txt2img">文生图</option><option value="img2img">图生图 (单图)</option><option value="multi">多图合成 (≥2图)</option></select></div>
+                <div class="form-group full"><label>提示词( 推荐结构: [主体] + [场景 / 环境] + [风格] + [光照] + [构图] + [质量要求] ) <span class="badge">必填</span></label><textarea id="imgPrompt" rows="3">A large fantasy harbor city built on cliffs, hundreds of small boats, layered stone bridges, glowing windows, distant mountains, cloudy sunset sky, cinematic fantasy realism, wide-angle composition, rich architectural details, high visual density</textarea></div>
+
+                <!-- ===== 尺寸选择：比例 + 分辨率 ===== -->
+                <div class="form-group">
+                    <label>📐 宽高比</label>
+                    <select id="imgAspectRatio">
+                        <option value="1:1">1:1</option>
+                        <option value="3:4">3:4</option>
+                        <option value="4:3">4:3</option>
+                        <option value="16:9" selected>16:9</option>
+                        <option value="9:16">9:16</option>
+                        <option value="2:3">2:3</option>
+                        <option value="3:2">3:2</option>
+                        <option value="21:9">21:9</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>🔬 分辨率</label>
+                    <select id="imgResolution">
+                        <option value="1K">1K</option>
+                        <option value="2K" selected>2K</option>
+                        <option value="3K">3K</option>
+                        <option value="4K">4K</option>
+                    </select>
+                </div>
+                <div class="form-group full">
+                    <label>📏 当前尺寸 <span class="badge">自动匹配</span></label>
+                    <input type="text" id="imgSizeDisplay" readonly class="size-display" value="2624x1472">
+                    <input type="hidden" id="imgSize" value="2624x1472">
+                    <span class="hint" style="margin-top:4px;">根据宽高比和分辨率自动计算，点击生成时使用该尺寸</span>
+                </div>
+                <!-- ===== 尺寸选择结束 ===== -->
+
+                <div class="form-group"><label>返回格式</label><select id="imgFormat"><option value="url">图片 URL</option><option value="b64">Base64</option></select></div>
+                <div class="form-group full" id="imgUrlsGroup">
+                    <label>图片 URL 列表 <span class="badge">图生图/多图必填</span></label>
+                    <div id="imgUrlList"></div>
+                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
+                        <button class="add-btn" id="imgAddBtn">➕ 添加图片</button>
+                        <span class="hint">每个图片可独立上传或输入URL/Base64。图生图只需保留一个，多图合成至少两个。</span>
+                    </div>
                 </div>
             </div>
+            <button class="btn" id="imgBtn"><span class="spinner"></span><span class="btn-text">🎨 生成图像</span></button>
+            <div class="result-box">
+                <div class="preview" id="imgPreview"><div class="placeholder" id="imgPlaceholder">🖼️ 生成的图片将显示在此</div><img id="imgResult" style="display:none; max-width:100%; max-height:400px;" alt="生成结果"></div>
+                <div class="json-log" id="imgLog"><span class="log-label">📋 响应日志</span>等待生成...</div>
+                <div id="imgError"></div>
+            </div>
         </div>
-        <button class="btn" id="imgBtn"><span class="spinner"></span><span class="btn-text">🎨 生成图像</span></button>
-        <div class="result-box">
-            <div class="preview" id="imgPreview"><div class="placeholder" id="imgPlaceholder">🖼️ 生成的图片将显示在此</div><img id="imgResult" style="display:none; max-width:100%; max-height:400px;" alt="生成结果"></div>
-            <div class="json-log" id="imgLog"><span class="log-label">📋 响应日志</span>等待生成...</div>
-            <div id="imgError"></div>
-        </div>
-    </div>
 
-    <!-- 视频面板 -->
-    <div class="tab-panel" id="panel-video">
-        <div class="form-grid">
-            <div class="form-group">
-                <label>模型</label>
-                <select id="videoModel" disabled>
-                    <option value="agnes-video-v2.0">Agnes-Video-V2.0 (固定)</option>
-                </select>
-                <span class="hint">视频生成使用固定模型 agnes-video-v2.0</span>
-            </div>
-            <div class="form-group">
-                <label>生成模式</label>
-                <select id="videoMode">
-                    <option value="txt2vid">文生视频</option>
-                    <option value="img2vid">图生视频 (单图)</option>
-                    <option value="multi">多图视频 (≥2图)</option>
-                    <option value="keyframes">关键帧动画 (≥2图)</option>
-                </select>
-            </div>
-            <div class="form-group full"><label>提示词( 推荐结构: [主体] + [动作] + [场景] + [镜头运动] + [光照] + [风格] ) <span class="badge">必填</span></label><textarea id="videoPrompt" rows="3">A cinematic shot of a cat walking on the beach at sunset, soft ocean waves, warm golden lighting, realistic motion</textarea></div>
-            <div class="form-group"><label>宽度 (width)</label><input type="number" id="videoWidth" value="1152" placeholder="默认1152"></div>
-            <div class="form-group"><label>高度 (height)</label><input type="number" id="videoHeight" value="768" placeholder="默认768"></div>
-            <div class="form-group"><label>帧数 (num_frames) <span class="badge">≤441, 8n+1</span></label><input type="number" id="videoFrames" value="121" placeholder="121"></div>
-            <div class="form-group"><label>帧率 (frame_rate) <span class="badge">1-60</span></label><input type="number" id="videoFps" value="24" placeholder="24"></div>
-            <div class="form-group full" id="videoUrlsGroup">
-                <label>图片 URL 列表 <span class="badge">图生/多图/关键帧必填</span></label>
-                <div id="videoUrlList"></div>
-                <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
-                    <button class="add-btn" id="videoAddBtn">➕ 添加图片</button>
-                    <span class="hint">每个图片可独立上传或输入URL/Base64。图生视频只需一个，多图/关键帧至少两个。</span>
+        <!-- 视频面板 -->
+        <div class="tab-panel" id="panel-video">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>模型</label>
+                    <select id="videoModel" disabled>
+                        <option value="agnes-video-v2.0">Agnes-Video-V2.0 (固定)</option>
+                    </select>
+                    <span class="hint">视频生成使用固定模型 agnes-video-v2.0</span>
+                </div>
+                <div class="form-group">
+                    <label>生成模式</label>
+                    <select id="videoMode">
+                        <option value="txt2vid">文生视频</option>
+                        <option value="img2vid">图生视频 (单图)</option>
+                        <option value="multi">多图视频 (≥2图)</option>
+                        <option value="keyframes">关键帧动画 (≥2图)</option>
+                    </select>
+                </div>
+                <div class="form-group full"><label>提示词( 推荐结构: [主体] + [动作] + [场景] + [镜头运动] + [光照] + [风格] ) <span class="badge">必填</span></label><textarea id="videoPrompt" rows="3">A cinematic shot of a cat walking on the beach at sunset, soft ocean waves, warm golden lighting, realistic motion</textarea></div>
+                <div class="form-group"><label>宽度 (width)</label><input type="number" id="videoWidth" value="1152" placeholder="默认1152"></div>
+                <div class="form-group"><label>高度 (height)</label><input type="number" id="videoHeight" value="768" placeholder="默认768"></div>
+                <div class="form-group"><label>帧数 (num_frames) <span class="badge">≤441, 8n+1</span></label><input type="number" id="videoFrames" value="121" placeholder="121"></div>
+                <div class="form-group"><label>帧率 (frame_rate) <span class="badge">1-60</span></label><input type="number" id="videoFps" value="24" placeholder="24"></div>
+                <div class="form-group full" id="videoUrlsGroup">
+                    <label>图片 URL 列表 <span class="badge">图生/多图/关键帧必填</span></label>
+                    <div id="videoUrlList"></div>
+                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
+                        <button class="add-btn" id="videoAddBtn">➕ 添加图片</button>
+                        <span class="hint">每个图片可独立上传或输入URL/Base64。图生视频只需一个，多图/关键帧至少两个。</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <button class="btn" id="videoBtn"><span class="spinner"></span><span class="btn-text">🎬 生成视频 (异步)</span></button>
-        <div class="result-box">
-            <div class="preview" id="videoPreview"><div class="placeholder" id="videoPlaceholder">🎥 生成的视频将显示在此</div><video id="videoResult" controls style="display:none; max-width:100%; max-height:400px; border-radius:20px;"></video></div>
-            <div class="json-log" id="videoLog"><span class="log-label">📋 任务日志</span>等待提交...</div>
-            <div id="videoError"></div>
+            <button class="btn" id="videoBtn"><span class="spinner"></span><span class="btn-text">🎬 生成视频 (异步)</span></button>
+            <div class="result-box">
+                <div class="preview" id="videoPreview"><div class="placeholder" id="videoPlaceholder">🎥 生成的视频将显示在此</div><video id="videoResult" controls style="display:none; max-width:100%; max-height:400px; border-radius:20px;"></video></div>
+                <div class="json-log" id="videoLog"><span class="log-label">📋 任务日志</span>等待提交...</div>
+                <div id="videoError"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    (function() {
-        // ---------- DOM ----------
-        const apiKeyInput = document.getElementById('apiKeyInput');
-        // Chat
-        const chatModel = document.getElementById('chatModel');
-        const chatTemp = document.getElementById('chatTemp');
-        const chatSystem = document.getElementById('chatSystem');
-        const chatUser = document.getElementById('chatUser');
-        const chatBtn = document.getElementById('chatBtn');
-        const chatStreamBtn = document.getElementById('chatStreamBtn');
-        const chatPlaceholder = document.getElementById('chatPlaceholder');
-        const chatContent = document.getElementById('chatContent');
-        const chatLog = document.getElementById('chatLog');
-        const chatError = document.getElementById('chatError');
-        const chatUrlList = document.getElementById('chatUrlList');
-        const chatAddBtn = document.getElementById('chatAddBtn');
-        // Image
-        const imgModel = document.getElementById('imgModel');
-        const imgMode = document.getElementById('imgMode');
-        const imgPrompt = document.getElementById('imgPrompt');
-        const imgSize = document.getElementById('imgSize');
-        const imgFormat = document.getElementById('imgFormat');
-        const imgBtn = document.getElementById('imgBtn');
-        const imgPlaceholder = document.getElementById('imgPlaceholder');
-        const imgResult = document.getElementById('imgResult');
-        const imgLog = document.getElementById('imgLog');
-        const imgError = document.getElementById('imgError');
-        const imgUrlList = document.getElementById('imgUrlList');
-        const imgAddBtn = document.getElementById('imgAddBtn');
-        // Video
-        const videoMode = document.getElementById('videoMode');
-        const videoPrompt = document.getElementById('videoPrompt');
-        const videoWidth = document.getElementById('videoWidth');
-        const videoHeight = document.getElementById('videoHeight');
-        const videoFrames = document.getElementById('videoFrames');
-        const videoFps = document.getElementById('videoFps');
-        const videoBtn = document.getElementById('videoBtn');
-        const videoPlaceholder = document.getElementById('videoPlaceholder');
-        const videoResult = document.getElementById('videoResult');
-        const videoLog = document.getElementById('videoLog');
-        const videoError = document.getElementById('videoError');
-        const videoUrlList = document.getElementById('videoUrlList');
-        const videoAddBtn = document.getElementById('videoAddBtn');
+    <script>
+        (function() {
+            // ---------- DOM ----------
+            const apiKeyInput = document.getElementById('apiKeyInput');
+            // Chat
+            const chatModel = document.getElementById('chatModel');
+            const chatTemp = document.getElementById('chatTemp');
+            const chatSystem = document.getElementById('chatSystem');
+            const chatUser = document.getElementById('chatUser');
+            const chatBtn = document.getElementById('chatBtn');
+            const chatStreamBtn = document.getElementById('chatStreamBtn');
+            const chatPlaceholder = document.getElementById('chatPlaceholder');
+            const chatContent = document.getElementById('chatContent');
+            const chatLog = document.getElementById('chatLog');
+            const chatError = document.getElementById('chatError');
+            const chatUrlList = document.getElementById('chatUrlList');
+            const chatAddBtn = document.getElementById('chatAddBtn');
+            // Image
+            const imgModel = document.getElementById('imgModel');
+            const imgMode = document.getElementById('imgMode');
+            const imgPrompt = document.getElementById('imgPrompt');
+            const imgAspectRatio = document.getElementById('imgAspectRatio');
+            const imgResolution = document.getElementById('imgResolution');
+            const imgSizeDisplay = document.getElementById('imgSizeDisplay');
+            const imgSize = document.getElementById('imgSize');
+            const imgFormat = document.getElementById('imgFormat');
+            const imgBtn = document.getElementById('imgBtn');
+            const imgPlaceholder = document.getElementById('imgPlaceholder');
+            const imgResult = document.getElementById('imgResult');
+            const imgLog = document.getElementById('imgLog');
+            const imgError = document.getElementById('imgError');
+            const imgUrlList = document.getElementById('imgUrlList');
+            const imgAddBtn = document.getElementById('imgAddBtn');
+            // Video
+            const videoMode = document.getElementById('videoMode');
+            const videoPrompt = document.getElementById('videoPrompt');
+            const videoWidth = document.getElementById('videoWidth');
+            const videoHeight = document.getElementById('videoHeight');
+            const videoFrames = document.getElementById('videoFrames');
+            const videoFps = document.getElementById('videoFps');
+            const videoBtn = document.getElementById('videoBtn');
+            const videoPlaceholder = document.getElementById('videoPlaceholder');
+            const videoResult = document.getElementById('videoResult');
+            const videoLog = document.getElementById('videoLog');
+            const videoError = document.getElementById('videoError');
+            const videoUrlList = document.getElementById('videoUrlList');
+            const videoAddBtn = document.getElementById('videoAddBtn');
 
-        // ---------- 工具函数 ----------
-        function getApiKey() { return apiKeyInput.value.trim(); }
-        function showError(container, msg) { container.innerHTML = `<div class="error-msg">❌ ${msg}</div>`; }
-        function clearError(container) { container.innerHTML = ''; }
-        function setLoading(btn, loading) {
-            if (loading) { btn.classList.add('loading'); btn.disabled = true; }
-            else { btn.classList.remove('loading'); btn.disabled = false; }
-        }
-        function updateLog(elem, content, label = '📋 响应日志') {
-            elem.innerHTML = `<span class="log-label">${label}</span>${content}`;
-        }
+            // ---------- 工具函数 ----------
+            function getApiKey() { return apiKeyInput.value.trim(); }
 
-        // ---------- 选项卡 ----------
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const panels = { chat: document.getElementById('panel-chat'), image: document.getElementById('panel-image'), video: document.getElementById('panel-video') };
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                tabBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                const tab = this.dataset.tab;
-                Object.keys(panels).forEach(key => panels[key].classList.toggle('active', key === tab));
-                clearError(chatError); clearError(imgError); clearError(videoError);
-            });
-        });
+            function showError(container, msg) { container.innerHTML = `<div class="error-msg">❌ ${msg}</div>`; }
 
-        // ========== 关键修复：Base64 清理函数 ==========
-        // 1. 去除 Data URI 前缀 (data:image/png;base64,) 和所有空白字符
-        function cleanBase64(dataUri) {
-            if (!dataUri) return '';
-            let base64 = dataUri;
-            // 如果包含逗号，说明是 Data URI，取逗号后面的部分
-            if (dataUri.includes(',')) {
-                base64 = dataUri.split(',')[1];
+            function clearError(container) { container.innerHTML = ''; }
+
+            function setLoading(btn, loading) {
+                if (loading) { btn.classList.add('loading');
+                    btn.disabled = true; } else { btn.classList.remove('loading');
+                    btn.disabled = false; }
             }
-            // 去除所有空白字符（换行、空格等）
-            return base64.replace(/\s/g, '');
-        }
 
-        // 2. 文件转 Base64：直接返回纯 Base64（不含前缀）
-        async function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const dataUri = reader.result;
-                    const base64 = dataUri.split(',')[1]?.replace(/\s/g, '') || '';
-                    resolve(base64);
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
+            function updateLog(elem, content, label = '📋 响应日志') {
+                elem.innerHTML = `<span class="log-label">${label}</span>${content}`;
+            }
 
-        // 3. 获取所有图片 URL，并自动清理
-        function getImageUrls(container) {
-            const inputs = container.querySelectorAll('.img-url-input');
-            return Array.from(inputs)
-                .map(inp => inp.value.trim())
-                .filter(v => v.length > 0)
-                .map(v => cleanBase64(v)); // 统一清理
-        }
-
-        // ---------- 通用图片列表管理 ----------
-        function createImageItem(container, value = '') {
-            const div = document.createElement('div');
-            div.className = 'image-url-item';
-
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.className = 'img-url-input';
-            input.placeholder = '输入图片URL或Base64...';
-            // 如果传入 value，可能是带前缀的 Data URI，我们需要显示时保留原样，但存储时清理在 getImageUrls 中进行
-            input.value = value;
-
-            const uploadBtn = document.createElement('button');
-            uploadBtn.className = 'btn-upload';
-            uploadBtn.textContent = '📤 本地上传';
-            uploadBtn.type = 'button';
-
-            const removeBtn = document.createElement('button');
-            removeBtn.className = 'btn-remove';
-            removeBtn.textContent = '✕ 删除';
-            removeBtn.type = 'button';
-
-            div.appendChild(input);
-            div.appendChild(uploadBtn);
-            div.appendChild(removeBtn);
-            container.appendChild(div);
-
-            // 上传事件
-            uploadBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const fileInput = document.createElement('input');
-                fileInput.type = 'file';
-                fileInput.accept = 'image/*';
-                fileInput.onchange = async function(ev) {
-                    const file = ev.target.files[0];
-                    if (!file) return;
-                    const originalText = uploadBtn.textContent;
-                    uploadBtn.textContent = '⏳ 转换中...';
-                    uploadBtn.disabled = true;
-                    try {
-                        // 直接获取纯 Base64（无前缀）
-                        const pureBase64 = await fileToBase64(file);
-                        // 显示时，可以添加 data:image/png;base64, 前缀以方便预览（但不影响提交）
-                        // 但为了清晰，我们可以只显示纯Base64（太长），或者显示前缀+Base64
-                        // 这里我们显示带前缀的，便于用户识别，但 getImageUrls 会清理
-                        const displayValue = 'data:image/png;base64,' + pureBase64;
-                        input.value = displayValue;
-                        input.dispatchEvent(new Event('input'));
-                        alert('✅ 已转换图片为Base64并填入');
-                    } catch (err) {
-                        alert('❌ 转换失败：' + err.message);
-                    } finally {
-                        uploadBtn.textContent = originalText;
-                        uploadBtn.disabled = false;
-                    }
-                };
-                fileInput.click();
+            // ---------- 选项卡 ----------
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const panels = { chat: document.getElementById('panel-chat'), image: document.getElementById('panel-image'),
+                video: document.getElementById('panel-video') };
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const tab = this.dataset.tab;
+                    Object.keys(panels).forEach(key => panels[key].classList.toggle('active', key === tab));
+                    clearError(chatError);
+                    clearError(imgError);
+                    clearError(videoError);
+                });
             });
 
-            // 删除事件
-            removeBtn.addEventListener('click', function() {
-                const parent = container;
-                const itemCount = parent.children.length;
-                let minCount = 1;
-                if (parent === imgUrlList && imgMode.value === 'multi') {
-                    minCount = 2;
-                } else if (parent === videoUrlList && (videoMode.value === 'multi' || videoMode.value === 'keyframes')) {
-                    minCount = 2;
+            // ========== Base64 清理 ==========
+            function cleanBase64(dataUri) {
+                if (!dataUri) return '';
+                let base64 = dataUri;
+                if (dataUri.includes(',')) {
+                    base64 = dataUri.split(',')[1];
                 }
-                if (itemCount <= minCount) {
-                    alert(`至少保留 ${minCount} 个图片输入框`);
+                return base64.replace(/\s/g, '');
+            }
+
+            async function fileToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const dataUri = reader.result;
+                        const base64 = dataUri.split(',')[1]?.replace(/\s/g, '') || '';
+                        resolve(base64);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            function getImageUrls(container) {
+                const inputs = container.querySelectorAll('.img-url-input');
+                return Array.from(inputs)
+                    .map(inp => inp.value.trim())
+                    .filter(v => v.length > 0)
+                    .map(v => cleanBase64(v));
+            }
+
+            // ---------- 通用图片列表管理 ----------
+            function createImageItem(container, value = '') {
+                const div = document.createElement('div');
+                div.className = 'image-url-item';
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'img-url-input';
+                input.placeholder = '输入图片URL或Base64...';
+                input.value = value;
+
+                const uploadBtn = document.createElement('button');
+                uploadBtn.className = 'btn-upload';
+                uploadBtn.textContent = '📤 本地上传';
+                uploadBtn.type = 'button';
+
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'btn-remove';
+                removeBtn.textContent = '✕ 删除';
+                removeBtn.type = 'button';
+
+                div.appendChild(input);
+                div.appendChild(uploadBtn);
+                div.appendChild(removeBtn);
+                container.appendChild(div);
+
+                uploadBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = 'image/*';
+                    fileInput.onchange = async function(ev) {
+                        const file = ev.target.files[0];
+                        if (!file) return;
+                        const originalText = uploadBtn.textContent;
+                        uploadBtn.textContent = '⏳ 转换中...';
+                        uploadBtn.disabled = true;
+                        try {
+                            const pureBase64 = await fileToBase64(file);
+                            const displayValue = 'data:image/png;base64,' + pureBase64;
+                            input.value = displayValue;
+                            input.dispatchEvent(new Event('input'));
+                            alert('✅ 已转换图片为Base64并填入');
+                        } catch (err) {
+                            alert('❌ 转换失败：' + err.message);
+                        } finally {
+                            uploadBtn.textContent = originalText;
+                            uploadBtn.disabled = false;
+                        }
+                    };
+                    fileInput.click();
+                });
+
+                removeBtn.addEventListener('click', function() {
+                    const parent = container;
+                    const itemCount = parent.children.length;
+                    let minCount = 1;
+                    if (parent === imgUrlList && imgMode.value === 'multi') {
+                        minCount = 2;
+                    } else if (parent === videoUrlList && (videoMode.value === 'multi' || videoMode.value ===
+                            'keyframes')) {
+                        minCount = 2;
+                    }
+                    if (itemCount <= minCount) {
+                        alert(`至少保留 ${minCount} 个图片输入框`);
+                        return;
+                    }
+                    parent.removeChild(div);
+                });
+
+                return div;
+            }
+
+            // ---------- 初始化列表 ----------
+            function initChatList(count = 1) {
+                chatUrlList.innerHTML = '';
+                for (let i = 0; i < count; i++) {
+                    createImageItem(chatUrlList, '');
+                }
+            }
+
+            function initImageList(count = 1) {
+                imgUrlList.innerHTML = '';
+                for (let i = 0; i < count; i++) {
+                    createImageItem(imgUrlList, '');
+                }
+            }
+
+            function initVideoList(count = 1) {
+                videoUrlList.innerHTML = '';
+                for (let i = 0; i < count; i++) {
+                    createImageItem(videoUrlList, '');
+                }
+            }
+
+            // ---------- 模式联动 ----------
+            function updateImageMode() {
+                const mode = imgMode.value;
+                const group = document.getElementById('imgUrlsGroup');
+                const addBtn = imgAddBtn;
+                if (mode === 'txt2img') {
+                    group.style.display = 'none';
+                    addBtn.classList.add('hidden');
                     return;
                 }
-                parent.removeChild(div);
+                group.style.display = 'block';
+                if (mode === 'multi') {
+                    addBtn.classList.remove('hidden');
+                    const currentCount = imgUrlList.children.length;
+                    if (currentCount < 2) {
+                        const needed = 2 - currentCount;
+                        for (let i = 0; i < needed; i++) {
+                            createImageItem(imgUrlList, '');
+                        }
+                    }
+                } else {
+                    addBtn.classList.add('hidden');
+                    while (imgUrlList.children.length > 1) {
+                        imgUrlList.removeChild(imgUrlList.lastChild);
+                    }
+                }
+            }
+            imgMode.addEventListener('change', updateImageMode);
+
+            function updateVideoMode() {
+                const mode = videoMode.value;
+                const group = document.getElementById('videoUrlsGroup');
+                const addBtn = videoAddBtn;
+                if (mode === 'txt2vid') {
+                    group.style.display = 'none';
+                    addBtn.classList.add('hidden');
+                    return;
+                }
+                group.style.display = 'block';
+                if (mode === 'multi' || mode === 'keyframes') {
+                    addBtn.classList.remove('hidden');
+                    const currentCount = videoUrlList.children.length;
+                    if (currentCount < 2) {
+                        const needed = 2 - currentCount;
+                        for (let i = 0; i < needed; i++) {
+                            createImageItem(videoUrlList, '');
+                        }
+                    }
+                } else {
+                    addBtn.classList.add('hidden');
+                    while (videoUrlList.children.length > 1) {
+                        videoUrlList.removeChild(videoUrlList.lastChild);
+                    }
+                }
+            }
+            videoMode.addEventListener('change', updateVideoMode);
+
+            // 添加按钮事件
+            chatAddBtn.addEventListener('click', function() {
+                createImageItem(chatUrlList, '');
+            });
+            imgAddBtn.addEventListener('click', function() {
+                createImageItem(imgUrlList, '');
+            });
+            videoAddBtn.addEventListener('click', function() {
+                createImageItem(videoUrlList, '');
             });
 
-            return div;
-        }
+            // ============================================================
+            //  ★★★ 尺寸映射表 & 自动更新逻辑 ★★★
+            // ============================================================
+            const sizeMap = {
+                '1:1': { '1K': '1024x1024', '2K': '2048x2048', '3K': '3072x3072', '4K': '4096x4096' },
+                '3:4': { '1K': '864x1152', '2K': '1728x2304', '3K': '2592x3456', '4K': '3456x4608' },
+                '4:3': { '1K': '1152x864', '2K': '2304x1728', '3K': '3456x2592', '4K': '4608x3456' },
+                '16:9': { '1K': '1312x736', '2K': '2624x1472', '3K': '3936x2208', '4K': '5248x2944' },
+                '9:16': { '1K': '736x1312', '2K': '1472x2624', '3K': '2208x3936', '4K': '2944x5248' },
+                '2:3': { '1K': '832x1248', '2K': '1664x2496', '3K': '2496x3744', '4K': '3328x4992' },
+                '3:2': { '1K': '1248x832', '2K': '2496x1664', '3K': '3744x2496', '4K': '4992x3328' },
+                '21:9': { '1K': '1568x672', '2K': '3136x1344', '3K': '4704x2016', '4K': '6272x2688' }
+            };
 
-        // ---------- 初始化列表 ----------
-        function initChatList(count = 1) {
-            chatUrlList.innerHTML = '';
-            for (let i = 0; i < count; i++) {
-                createImageItem(chatUrlList, '');
-            }
-        }
-        function initImageList(count = 1) {
-            imgUrlList.innerHTML = '';
-            for (let i = 0; i < count; i++) {
-                createImageItem(imgUrlList, '');
-            }
-        }
-        function initVideoList(count = 1) {
-            videoUrlList.innerHTML = '';
-            for (let i = 0; i < count; i++) {
-                createImageItem(videoUrlList, '');
-            }
-        }
-
-        // ---------- 模式联动 ----------
-        function updateImageMode() {
-            const mode = imgMode.value;
-            const group = document.getElementById('imgUrlsGroup');
-            const addBtn = imgAddBtn;
-            if (mode === 'txt2img') {
-                group.style.display = 'none';
-                addBtn.classList.add('hidden');
-                return;
-            }
-            group.style.display = 'block';
-            if (mode === 'multi') {
-                addBtn.classList.remove('hidden');
-                const currentCount = imgUrlList.children.length;
-                if (currentCount < 2) {
-                    const needed = 2 - currentCount;
-                    for (let i = 0; i < needed; i++) {
-                        createImageItem(imgUrlList, '');
-                    }
-                }
-            } else {
-                addBtn.classList.add('hidden');
-                while (imgUrlList.children.length > 1) {
-                    imgUrlList.removeChild(imgUrlList.lastChild);
-                }
-            }
-        }
-        imgMode.addEventListener('change', updateImageMode);
-
-        function updateVideoMode() {
-            const mode = videoMode.value;
-            const group = document.getElementById('videoUrlsGroup');
-            const addBtn = videoAddBtn;
-            if (mode === 'txt2vid') {
-                group.style.display = 'none';
-                addBtn.classList.add('hidden');
-                return;
-            }
-            group.style.display = 'block';
-            if (mode === 'multi' || mode === 'keyframes') {
-                addBtn.classList.remove('hidden');
-                const currentCount = videoUrlList.children.length;
-                if (currentCount < 2) {
-                    const needed = 2 - currentCount;
-                    for (let i = 0; i < needed; i++) {
-                        createImageItem(videoUrlList, '');
-                    }
-                }
-            } else {
-                addBtn.classList.add('hidden');
-                while (videoUrlList.children.length > 1) {
-                    videoUrlList.removeChild(videoUrlList.lastChild);
-                }
-            }
-        }
-        videoMode.addEventListener('change', updateVideoMode);
-
-        // 添加按钮事件
-        chatAddBtn.addEventListener('click', function() {
-            createImageItem(chatUrlList, '');
-        });
-        imgAddBtn.addEventListener('click', function() {
-            createImageItem(imgUrlList, '');
-        });
-        videoAddBtn.addEventListener('click', function() {
-            createImageItem(videoUrlList, '');
-        });
-
-        // ---------- 对话提交 ----------
-        async function callChat(stream = false) {
-            clearError(chatError);
-            const key = getApiKey();
-            if (!key) { showError(chatError, '请输入 API Key'); return; }
-            const model = chatModel.value;
-            const temp = parseFloat(chatTemp.value) || 0.7;
-            const system = chatSystem.value.trim();
-            const user = chatUser.value.trim();
-            const imageUrls = getImageUrls(chatUrlList);
-            if (!user) { showError(chatError, '请输入用户消息'); return; }
-
-            const messages = [];
-            if (system) messages.push({ role: 'system', content: system });
-
-            let userContent;
-            if (imageUrls.length === 0) {
-                userContent = user;
-            } else {
-                userContent = [{ type: 'text', text: user }];
-                imageUrls.forEach(url => {
-                    // 对于对话，需要加上 data:image/png;base64, 前缀，因为对话API要求完整的 Data URI
-                    // 但我们的 cleanBase64 已经去掉了前缀，所以需要重新添加
-                    const fullDataUri = url.startsWith('data:') ? url : 'data:image/png;base64,' + url;
-                    userContent.push({ type: 'image_url', image_url: { url: fullDataUri } });
-                });
-            }
-            messages.push({ role: 'user', content: userContent });
-
-            const payload = { model, messages, temperature: temp, stream };
-            const btn = stream ? chatStreamBtn : chatBtn;
-            setLoading(btn, true);
-            chatPlaceholder.style.display = 'none';
-            chatContent.style.display = 'block';
-            chatContent.textContent = stream ? '⏳ 流式接收中...' : '⏳ 生成中...';
-            updateLog(chatLog, '请求发送中...', '📡 请求详情');
-            try {
-                const resp = await fetch('https://apihub.agnes-ai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!resp.ok) { const errText = await resp.text(); throw new Error(`HTTP ${resp.status}: ${errText}`); }
-                if (stream) {
-                    const reader = resp.body.getReader();
-                    const decoder = new TextDecoder('utf-8');
-                    let fullText = '', buffer = '';
-                    chatContent.textContent = '';
-                    while (true) {
-                        const { done, value } = await reader.read();
-                        if (done) break;
-                        buffer += decoder.decode(value, { stream: true });
-                        const lines = buffer.split('\n');
-                        buffer = lines.pop() || '';
-                        for (const line of lines) {
-                            if (line.startsWith('data: ')) {
-                                const data = line.slice(6);
-                                if (data === '[DONE]') continue;
-                                try {
-                                    const json = JSON.parse(data);
-                                    const delta = json.choices?.[0]?.delta?.content;
-                                    if (delta) { fullText += delta; chatContent.textContent = fullText; }
-                                } catch (e) {}
-                            }
-                        }
-                    }
-                    updateLog(chatLog, JSON.stringify({ full_text: fullText }, null, 2), '📋 流式响应完成');
-                    if (!fullText) chatContent.textContent = '(无内容返回)';
+            function updateImageSize() {
+                const ratio = imgAspectRatio.value;
+                const resolution = imgResolution.value;
+                const size = sizeMap[ratio]?.[resolution];
+                if (size) {
+                    imgSizeDisplay.value = size;
+                    imgSize.value = size;
                 } else {
-                    const json = await resp.json();
-                    updateLog(chatLog, JSON.stringify(json, null, 2), '📋 响应');
-                    chatContent.textContent = json.choices?.[0]?.message?.content || '(无内容)';
+                    // fallback
+                    imgSizeDisplay.value = '1024x1024';
+                    imgSize.value = '1024x1024';
                 }
-            } catch (err) {
-                showError(chatError, err.message);
-                chatContent.textContent = '❌ 请求失败';
-                updateLog(chatLog, err.stack || err.message, '⚠️ 错误');
-            } finally { setLoading(btn, false); }
-        }
-        chatBtn.addEventListener('click', () => callChat(false));
-        chatStreamBtn.addEventListener('click', () => callChat(true));
-
-        // ---------- 图像生成 ----------
-        async function generateImage() {
-            clearError(imgError);
-            const key = getApiKey();
-            if (!key) { showError(imgError, '请输入 API Key'); return; }
-            const model = imgModel.value, mode = imgMode.value, prompt = imgPrompt.value.trim(), size = imgSize.value.trim(), format = imgFormat.value;
-            if (!prompt) { showError(imgError, '请输入提示词'); return; }
-            if (!size || !/^\d+x\d+$/.test(size)) { showError(imgError, '尺寸格式错误，如 1024x768'); return; }
-            const payload = { model, prompt, size };
-            if (mode !== 'txt2img') {
-                const urls = getImageUrls(imgUrlList); // 已经清理，纯Base64
-                if (urls.length === 0) { showError(imgError, '请至少输入一个图片URL/Base64'); return; }
-                if (mode === 'img2img' && urls.length !== 1) { showError(imgError, '图生图模式仅需一个图片'); return; }
-                if (mode === 'multi' && urls.length < 2) { showError(imgError, '多图合成至少需要两个图片'); return; }
-                // 图像 API 支持 Data URI 或纯 Base64，官方文档支持带前缀的Data URI，我们直接使用原值（getImageUrls返回的是纯Base64，但API也接受纯Base64？文档示例是URL，但我们可以尝试纯Base64）
-                // 为了兼容，我们添加 data:image/png;base64, 前缀，但有些API可能接受纯Base64，保守起见，我们添加前缀
-                const prefixedUrls = urls.map(u => u.startsWith('data:') ? u : 'data:image/png;base64,' + u);
-                payload.extra_body = { image: prefixedUrls };
             }
-            if (format === 'url') { if (!payload.extra_body) payload.extra_body = {}; payload.extra_body.response_format = 'url'; }
-            else {
-                if (mode === 'txt2img') payload.return_base64 = true;
-                else { if (!payload.extra_body) payload.extra_body = {}; payload.extra_body.response_format = 'b64_json'; }
-            }
-            setLoading(imgBtn, true);
-            imgPlaceholder.style.display = 'none';
-            imgResult.style.display = 'none';
-            updateLog(imgLog, '请求发送中...', '📡 请求');
-            try {
-                const resp = await fetch('https://apihub.agnes-ai.com/v1/images/generations', {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const json = await resp.json();
-                updateLog(imgLog, JSON.stringify(json, null, 2), '📋 响应');
-                if (!resp.ok || json.error) { const errMsg = json.error?.message || json.error?.code || `HTTP ${resp.status}`; throw new Error(errMsg); }
-                const data = json.data?.[0];
-                if (!data) throw new Error('响应缺少 data 字段');
-                let imageSrc = data.url || (data.b64_json ? `data:image/png;base64,${data.b64_json}` : null);
-                if (imageSrc) { imgResult.src = imageSrc; imgResult.style.display = 'block'; imgPlaceholder.style.display = 'none'; }
-                else { throw new Error('未找到图片数据'); }
-            } catch (err) { showError(imgError, err.message); imgPlaceholder.style.display = 'block'; imgPlaceholder.textContent = '❌ 生成失败'; }
-            finally { setLoading(imgBtn, false); }
-        }
-        imgBtn.addEventListener('click', generateImage);
 
-        // ---------- 视频生成 (修复 Base64 和轮询) ----------
-        let videoPollingTimeout = null;
+            // 绑定尺寸更新事件
+            imgAspectRatio.addEventListener('change', updateImageSize);
+            imgResolution.addEventListener('change', updateImageSize);
 
-        async function generateVideo() {
-            clearError(videoError);
-            const key = getApiKey();
-            if (!key) { showError(videoError, '请输入 API Key'); return; }
-            const mode = videoMode.value, prompt = videoPrompt.value.trim();
-            const width = parseInt(videoWidth.value) || 1152, height = parseInt(videoHeight.value) || 768;
-            const num_frames = parseInt(videoFrames.value) || 121, frame_rate = parseInt(videoFps.value) || 24;
-            if (!prompt) { showError(videoError, '请输入提示词'); return; }
-            if (num_frames > 441) { showError(videoError, 'num_frames 不能超过 441'); return; }
-            if (num_frames % 8 !== 1) { showError(videoError, 'num_frames 必须满足 8n+1 (如 81,121,241)'); return; }
-            if (frame_rate < 1 || frame_rate > 60) { showError(videoError, '帧率范围 1-60'); return; }
+            // ---------- 对话提交 ----------
+            async function callChat(stream = false) {
+                clearError(chatError);
+                const key = getApiKey();
+                if (!key) { showError(chatError, '请输入 API Key'); return; }
+                const model = chatModel.value;
+                const temp = parseFloat(chatTemp.value) || 0.7;
+                const system = chatSystem.value.trim();
+                const user = chatUser.value.trim();
+                const imageUrls = getImageUrls(chatUrlList);
+                if (!user) { showError(chatError, '请输入用户消息'); return; }
 
-            const payload = { model: 'agnes-video-v2.0', prompt, width, height, num_frames, frame_rate };
-            if (mode !== 'txt2vid') {
-                const urls = getImageUrls(videoUrlList); // 纯Base64或URL
-                if (urls.length === 0) { showError(videoError, '请至少输入一个图片URL/Base64'); return; }
-                if (mode === 'img2vid' && urls.length !== 1) { showError(videoError, '图生视频仅需一个图片'); return; }
-                if ((mode === 'multi' || mode === 'keyframes') && urls.length < 2) { showError(videoError, '多图/关键帧至少需要两个图片'); return; }
+                const messages = [];
+                if (system) messages.push({ role: 'system', content: system });
 
-                // 视频API要求：单张图片用 image 字段（字符串），多张用 extra_body.image（数组）
-                // 注意：视频API似乎不支持纯Base64？文档说支持 Data URI，但为了保险，我们尝试纯Base64（不带前缀）
-                // 但用户反馈第三方URL成功，说明API支持URL；对于Base64，可能需要带前缀，我们先尝试纯Base64（因为之前报错 padding）
-                // 根据之前的错误，pading错误是因为带前缀导致，所以我们应该传纯Base64（不带前缀）
-                // 但是用户提到第三方URL成功，而本地Base64失败，说明API可能期望纯Base64或者带前缀的Data URI，但我们的cleanBase64去掉了前缀，可能反而导致错误？
-                // 实际上，之前的错误是"Incorrect padding"，这是Base64格式问题，不是前缀问题。我们清理换行后应该解决。
-                // 所以，我们直接传递 cleaned Base64（无前缀），如果API不接受，我们再尝试加前缀。
-                // 因为之前用户说使用第三方URL成功，所以URL是没问题的。而Base64我们清理后，应该也能成功。
-                // 所以，我们直接传递纯Base64字符串。
-                if (mode === 'img2vid') {
-                    payload.image = urls[0]; // 纯Base64
+                let userContent;
+                if (imageUrls.length === 0) {
+                    userContent = user;
                 } else {
-                    payload.extra_body = { image: urls }; // 数组，每个元素纯Base64
-                    if (mode === 'keyframes') payload.extra_body.mode = 'keyframes';
-                }
-            }
-
-            setLoading(videoBtn, true);
-            videoPlaceholder.style.display = 'none';
-            videoResult.style.display = 'none';
-            updateLog(videoLog, '提交任务中...', '📡 请求');
-
-            try {
-                const resp = await fetch('https://apihub.agnes-ai.com/v1/videos', {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const json = await resp.json();
-                if (!resp.ok || json.error) {
-                    const errMsg = json.error?.message || json.error?.code || `HTTP ${resp.status}`;
-                    throw new Error(errMsg);
-                }
-                const videoId = json.video_id;
-                if (!videoId) throw new Error('响应中缺少 video_id');
-
-                updateLog(videoLog, JSON.stringify(json, null, 2), '📋 任务创建成功');
-
-                // 轮询逻辑：初始间隔 10 秒，动态退避
-                let attempts = 0;
-                const maxAttempts = 60;
-                let currentInterval = 10000;
-
-                function pollVideo() {
-                    attempts++;
-                    fetch(`https://apihub.agnes-ai.com/agnesapi?video_id=${videoId}`, {
-                        headers: { 'Authorization': `Bearer ${key}` }
-                    })
-                    .then(res => res.json())
-                    .then(queryJson => {
-                        if (!queryJson.error) {
-                            const status = queryJson.status;
-                            const progress = queryJson.progress || 0;
-                            updateLog(videoLog, `⏳ 状态: ${status} (${progress}%)\n${JSON.stringify(queryJson, null, 2)}`, '📋 轮询中');
-
-                            if (status === 'completed') {
-                                clearTimeout(videoPollingTimeout);
-                                videoPollingTimeout = null;
-                                const videoUrl = queryJson.remixed_from_video_id;
-                                if (videoUrl) {
-                                    videoResult.src = videoUrl;
-                                    videoResult.style.display = 'block';
-                                    videoPlaceholder.style.display = 'none';
-                                    updateLog(videoLog, `✅ 生成完成\n${JSON.stringify(queryJson, null, 2)}`, '📋 完成');
-                                } else {
-                                    throw new Error('完成但未返回视频 URL');
-                                }
-                                setLoading(videoBtn, false);
-                                return;
-                            } else if (status === 'failed') {
-                                clearTimeout(videoPollingTimeout);
-                                videoPollingTimeout = null;
-                                throw new Error(queryJson.error?.message || '视频生成失败');
-                            } else if (status === 'queued' || status === 'in_progress') {
-                                if (attempts > 10) {
-                                    currentInterval = Math.min(currentInterval * 1.5, 30000);
-                                }
-                            }
-                        } else {
-                            // 查询出错
-                            if (queryJson.error && queryJson.error.message && queryJson.error.message.includes('rate limit')) {
-                                currentInterval = Math.min(currentInterval * 1.5, 30000);
-                            } else {
-                                throw new Error(queryJson.error?.message || '查询失败');
-                            }
-                        }
-
-                        if (attempts >= maxAttempts) {
-                            clearTimeout(videoPollingTimeout);
-                            videoPollingTimeout = null;
-                            throw new Error('轮询超时 (超过最大尝试次数)');
-                        }
-
-                        videoPollingTimeout = setTimeout(pollVideo, currentInterval);
-                    })
-                    .catch(err => {
-                        clearTimeout(videoPollingTimeout);
-                        videoPollingTimeout = null;
-                        showError(videoError, err.message);
-                        updateLog(videoLog, `❌ 错误: ${err.message}`, '⚠️ 异常');
-                        setLoading(videoBtn, false);
+                    userContent = [{ type: 'text', text: user }];
+                    imageUrls.forEach(url => {
+                        const fullDataUri = url.startsWith('data:') ? url : 'data:image/png;base64,' + url;
+                        userContent.push({ type: 'image_url', image_url: { url: fullDataUri } });
                     });
                 }
+                messages.push({ role: 'user', content: userContent });
 
-                videoPollingTimeout = setTimeout(pollVideo, currentInterval);
-
-                // 总超时保护（20分钟）
-                setTimeout(() => {
-                    if (videoPollingTimeout) {
-                        clearTimeout(videoPollingTimeout);
-                        videoPollingTimeout = null;
-                        showError(videoError, '轮询总超时 (20分钟)');
-                        setLoading(videoBtn, false);
+                const payload = { model, messages, temperature: temp, stream };
+                const btn = stream ? chatStreamBtn : chatBtn;
+                setLoading(btn, true);
+                chatPlaceholder.style.display = 'none';
+                chatContent.style.display = 'block';
+                chatContent.textContent = stream ? '⏳ 流式接收中...' : '⏳ 生成中...';
+                updateLog(chatLog, '请求发送中...', '📡 请求详情');
+                try {
+                    const resp = await fetch('https://apihub.agnes-ai.com/v1/chat/completions', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!resp.ok) { const errText = await resp.text(); throw new Error(`HTTP ${resp.status}: ${errText}`); }
+                    if (stream) {
+                        const reader = resp.body.getReader();
+                        const decoder = new TextDecoder('utf-8');
+                        let fullText = '',
+                            buffer = '';
+                        chatContent.textContent = '';
+                        while (true) {
+                            const { done, value } = await reader.read();
+                            if (done) break;
+                            buffer += decoder.decode(value, { stream: true });
+                            const lines = buffer.split('\n');
+                            buffer = lines.pop() || '';
+                            for (const line of lines) {
+                                if (line.startsWith('data: ')) {
+                                    const data = line.slice(6);
+                                    if (data === '[DONE]') continue;
+                                    try {
+                                        const json = JSON.parse(data);
+                                        const delta = json.choices?.[0]?.delta?.content;
+                                        if (delta) { fullText += delta;
+                                            chatContent.textContent = fullText; }
+                                    } catch (e) {}
+                                }
+                            }
+                        }
+                        updateLog(chatLog, JSON.stringify({ full_text: fullText }, null, 2), '📋 流式响应完成');
+                        if (!fullText) chatContent.textContent = '(无内容返回)';
+                    } else {
+                        const json = await resp.json();
+                        updateLog(chatLog, JSON.stringify(json, null, 2), '📋 响应');
+                        chatContent.textContent = json.choices?.[0]?.message?.content || '(无内容)';
                     }
-                }, 1200000);
-
-            } catch (err) {
-                showError(videoError, err.message);
-                updateLog(videoLog, `❌ 错误: ${err.message}`, '⚠️ 异常');
-                setLoading(videoBtn, false);
+                } catch (err) {
+                    showError(chatError, err.message);
+                    chatContent.textContent = '❌ 请求失败';
+                    updateLog(chatLog, err.stack || err.message, '⚠️ 错误');
+                } finally { setLoading(btn, false); }
             }
-        }
-        videoBtn.addEventListener('click', generateVideo);
-        window.addEventListener('beforeunload', function() {
-            if (videoPollingTimeout) {
-                clearTimeout(videoPollingTimeout);
-                videoPollingTimeout = null;
-            }
-        });
+            chatBtn.addEventListener('click', () => callChat(false));
+            chatStreamBtn.addEventListener('click', () => callChat(true));
 
-        // ---------- 快捷键 ----------
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                const active = document.activeElement;
-                if (active && (active.tagName === 'TEXTAREA' || active.tagName === 'INPUT')) {
-                    const activeTab = document.querySelector('.tab-btn.active');
-                    if (activeTab) {
-                        const tab = activeTab.dataset.tab;
-                        if (tab === 'chat') chatBtn.click();
-                        else if (tab === 'image') imgBtn.click();
-                        else if (tab === 'video') videoBtn.click();
+            // ---------- 图像生成 (使用 imgSize 隐藏字段) ----------
+            async function generateImage() {
+                clearError(imgError);
+                const key = getApiKey();
+                if (!key) { showError(imgError, '请输入 API Key'); return; }
+                const model = imgModel.value,
+                    mode = imgMode.value,
+                    prompt = imgPrompt.value.trim();
+                // ★ 从隐藏字段读取尺寸（已由下拉框自动计算）
+                const size = imgSize.value.trim();
+                const format = imgFormat.value;
+
+                if (!prompt) { showError(imgError, '请输入提示词'); return; }
+                if (!size || !/^\d+x\d+$/.test(size)) { showError(imgError, '尺寸格式错误，请检查宽高比和分辨率选择'); return; }
+
+                const payload = { model, prompt, size };
+                if (mode !== 'txt2img') {
+                    const urls = getImageUrls(imgUrlList);
+                    if (urls.length === 0) { showError(imgError, '请至少输入一个图片URL/Base64'); return; }
+                    if (mode === 'img2img' && urls.length !== 1) { showError(imgError, '图生图模式仅需一个图片'); return; }
+                    if (mode === 'multi' && urls.length < 2) { showError(imgError, '多图合成至少需要两个图片'); return; }
+                    const prefixedUrls = urls.map(u => u.startsWith('data:') ? u : 'data:image/png;base64,' + u);
+                    payload.extra_body = { image: prefixedUrls };
+                }
+                if (format === 'url') { if (!payload.extra_body) payload.extra_body = {};
+                    payload.extra_body.response_format = 'url'; } else {
+                    if (mode === 'txt2img') payload.return_base64 = true;
+                    else { if (!payload.extra_body) payload.extra_body = {};
+                        payload.extra_body.response_format = 'b64_json'; }
+                }
+                setLoading(imgBtn, true);
+                imgPlaceholder.style.display = 'none';
+                imgResult.style.display = 'none';
+                updateLog(imgLog, '请求发送中...', '📡 请求');
+                try {
+                    const resp = await fetch('https://apihub.agnes-ai.com/v1/images/generations', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const json = await resp.json();
+                    updateLog(imgLog, JSON.stringify(json, null, 2), '📋 响应');
+                    if (!resp.ok || json.error) { const errMsg = json.error?.message || json.error?.code ||
+                            `HTTP ${resp.status}`; throw new Error(errMsg); }
+                    const data = json.data?.[0];
+                    if (!data) throw new Error('响应缺少 data 字段');
+                    let imageSrc = data.url || (data.b64_json ? `data:image/png;base64,${data.b64_json}` : null);
+                    if (imageSrc) { imgResult.src = imageSrc;
+                        imgResult.style.display = 'block';
+                        imgPlaceholder.style.display = 'none'; } else { throw new Error('未找到图片数据'); }
+                } catch (err) { showError(imgError, err.message);
+                    imgPlaceholder.style.display = 'block';
+                    imgPlaceholder.textContent = '❌ 生成失败'; } finally { setLoading(imgBtn, false); }
+            }
+            imgBtn.addEventListener('click', generateImage);
+
+            // ---------- 视频生成 ----------
+            let videoPollingTimeout = null;
+
+            async function generateVideo() {
+                clearError(videoError);
+                const key = getApiKey();
+                if (!key) { showError(videoError, '请输入 API Key'); return; }
+                const mode = videoMode.value,
+                    prompt = videoPrompt.value.trim();
+                const width = parseInt(videoWidth.value) || 1152,
+                    height = parseInt(videoHeight.value) || 768;
+                const num_frames = parseInt(videoFrames.value) || 121,
+                    frame_rate = parseInt(videoFps.value) || 24;
+                if (!prompt) { showError(videoError, '请输入提示词'); return; }
+                if (num_frames > 441) { showError(videoError, 'num_frames 不能超过 441'); return; }
+                if (num_frames % 8 !== 1) { showError(videoError, 'num_frames 必须满足 8n+1 (如 81,121,241)'); return; }
+                if (frame_rate < 1 || frame_rate > 60) { showError(videoError, '帧率范围 1-60'); return; }
+
+                const payload = { model: 'agnes-video-v2.0', prompt, width, height, num_frames, frame_rate };
+                if (mode !== 'txt2vid') {
+                    const urls = getImageUrls(videoUrlList);
+                    if (urls.length === 0) { showError(videoError, '请至少输入一个图片URL/Base64'); return; }
+                    if (mode === 'img2vid' && urls.length !== 1) { showError(videoError, '图生视频仅需一个图片'); return; }
+                    if ((mode === 'multi' || mode === 'keyframes') && urls.length < 2) { showError(videoError,
+                            '多图/关键帧至少需要两个图片'); return; }
+                    if (mode === 'img2vid') {
+                        payload.image = urls[0];
+                    } else {
+                        payload.extra_body = { image: urls };
+                        if (mode === 'keyframes') payload.extra_body.mode = 'keyframes';
                     }
                 }
+
+                setLoading(videoBtn, true);
+                videoPlaceholder.style.display = 'none';
+                videoResult.style.display = 'none';
+                updateLog(videoLog, '提交任务中...', '📡 请求');
+
+                try {
+                    const resp = await fetch('https://apihub.agnes-ai.com/v1/videos', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const json = await resp.json();
+                    if (!resp.ok || json.error) {
+                        const errMsg = json.error?.message || json.error?.code || `HTTP ${resp.status}`;
+                        throw new Error(errMsg);
+                    }
+                    const videoId = json.video_id;
+                    if (!videoId) throw new Error('响应中缺少 video_id');
+
+                    updateLog(videoLog, JSON.stringify(json, null, 2), '📋 任务创建成功');
+
+                    let attempts = 0;
+                    const maxAttempts = 60;
+                    let currentInterval = 10000;
+
+                    function pollVideo() {
+                        attempts++;
+                        fetch(`https://apihub.agnes-ai.com/agnesapi?video_id=${videoId}`, {
+                            headers: { 'Authorization': `Bearer ${key}` }
+                        })
+                        .then(res => res.json())
+                        .then(queryJson => {
+                            if (!queryJson.error) {
+                                const status = queryJson.status;
+                                const progress = queryJson.progress || 0;
+                                updateLog(videoLog, `⏳ 状态: ${status} (${progress}%)\n${JSON.stringify(queryJson, null, 2)}`,
+                                    '📋 轮询中');
+
+                                if (status === 'completed') {
+                                    clearTimeout(videoPollingTimeout);
+                                    videoPollingTimeout = null;
+                                    const videoUrl = queryJson.remixed_from_video_id;
+                                    if (videoUrl) {
+                                        videoResult.src = videoUrl;
+                                        videoResult.style.display = 'block';
+                                        videoPlaceholder.style.display = 'none';
+                                        updateLog(videoLog, `✅ 生成完成\n${JSON.stringify(queryJson, null, 2)}`,
+                                            '📋 完成');
+                                    } else {
+                                        throw new Error('完成但未返回视频 URL');
+                                    }
+                                    setLoading(videoBtn, false);
+                                    return;
+                                } else if (status === 'failed') {
+                                    clearTimeout(videoPollingTimeout);
+                                    videoPollingTimeout = null;
+                                    throw new Error(queryJson.error?.message || '视频生成失败');
+                                } else if (status === 'queued' || status === 'in_progress') {
+                                    if (attempts > 10) {
+                                        currentInterval = Math.min(currentInterval * 1.5, 30000);
+                                    }
+                                }
+                            } else {
+                                if (queryJson.error && queryJson.error.message && queryJson.error.message.includes(
+                                        'rate limit')) {
+                                    currentInterval = Math.min(currentInterval * 1.5, 30000);
+                                } else {
+                                    throw new Error(queryJson.error?.message || '查询失败');
+                                }
+                            }
+
+                            if (attempts >= maxAttempts) {
+                                clearTimeout(videoPollingTimeout);
+                                videoPollingTimeout = null;
+                                throw new Error('轮询超时 (超过最大尝试次数)');
+                            }
+
+                            videoPollingTimeout = setTimeout(pollVideo, currentInterval);
+                        })
+                        .catch(err => {
+                            clearTimeout(videoPollingTimeout);
+                            videoPollingTimeout = null;
+                            showError(videoError, err.message);
+                            updateLog(videoLog, `❌ 错误: ${err.message}`, '⚠️ 异常');
+                            setLoading(videoBtn, false);
+                        });
+                    }
+
+                    videoPollingTimeout = setTimeout(pollVideo, currentInterval);
+
+                    setTimeout(() => {
+                        if (videoPollingTimeout) {
+                            clearTimeout(videoPollingTimeout);
+                            videoPollingTimeout = null;
+                            showError(videoError, '轮询总超时 (20分钟)');
+                            setLoading(videoBtn, false);
+                        }
+                    }, 1200000);
+
+                } catch (err) {
+                    showError(videoError, err.message);
+                    updateLog(videoLog, `❌ 错误: ${err.message}`, '⚠️ 异常');
+                    setLoading(videoBtn, false);
+                }
             }
-        });
+            videoBtn.addEventListener('click', generateVideo);
+            window.addEventListener('beforeunload', function() {
+                if (videoPollingTimeout) {
+                    clearTimeout(videoPollingTimeout);
+                    videoPollingTimeout = null;
+                }
+            });
 
-        // ---------- API在线参考 ----------
-        document.getElementById('apiRefLink').addEventListener('click', function(e) {
-            e.preventDefault();
-            const activeTab = document.querySelector('.tab-btn.active');
-            if (!activeTab) return;
-            const tab = activeTab.dataset.tab;
-            let url = '';
-            if (tab === 'chat') url = 'https://agnes-ai.com/zh-Hans/docs/agnes-20-flash';
-            else if (tab === 'image') url = 'https://agnes-ai.com/zh-Hans/docs/agnes-image-21-flash';
-            else if (tab === 'video') url = 'https://agnes-ai.com/zh-Hans/docs/agnes-video-v20';
-            if (url) window.open(url, '_blank');
-        });
+            // ---------- 快捷键 ----------
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    const active = document.activeElement;
+                    if (active && (active.tagName === 'TEXTAREA' || active.tagName === 'INPUT')) {
+                        const activeTab = document.querySelector('.tab-btn.active');
+                        if (activeTab) {
+                            const tab = activeTab.dataset.tab;
+                            if (tab === 'chat') chatBtn.click();
+                            else if (tab === 'image') imgBtn.click();
+                            else if (tab === 'video') videoBtn.click();
+                        }
+                    }
+                }
+            });
 
-        // ---------- 初始化 ----------
-        initChatList(1);
-        initImageList(1);
-        initVideoList(1);
-        updateImageMode();
-        updateVideoMode();
+            // ---------- API在线参考 ----------
+            document.getElementById('apiRefLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                const activeTab = document.querySelector('.tab-btn.active');
+                if (!activeTab) return;
+                const tab = activeTab.dataset.tab;
+                let url = '';
+                if (tab === 'chat') url = 'https://agnes-ai.com/zh-Hans/docs/agnes-20-flash';
+                else if (tab === 'image') url = 'https://agnes-ai.com/zh-Hans/docs/agnes-image-21-flash';
+                else if (tab === 'video') url = 'https://agnes-ai.com/zh-Hans/docs/agnes-video-v20';
+                if (url) window.open(url, '_blank');
+            });
 
-        console.log('✅ Agnes AI 全能工具箱 (Base64修复版) 已加载。');
-        console.log('💡 本地上传的图片将被转换为纯Base64，解决padding错误。');
-    })();
-</script>
+            // ---------- 初始化 ----------
+            initChatList(1);
+            initImageList(1);
+            initVideoList(1);
+            updateImageMode();
+            updateVideoMode();
+            // 初始化尺寸显示
+            updateImageSize();
+
+            console.log('✅ Agnes AI 全能工具箱 (尺寸选择器升级版) 已加载。');
+            console.log('📐 宽高比 + 分辨率 自动匹配尺寸。');
+        })();
+    </script>
 </body>
 </html>
